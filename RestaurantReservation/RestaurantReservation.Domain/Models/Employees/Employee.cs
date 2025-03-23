@@ -19,7 +19,7 @@ public class Employee
     public string Position { get; set; }
     
     [Required]
-    [ForeignKey(Restaurant)]
+    [ForeignKey(nameof(Restaurant))]
     public long RestaurantId { get; set; }
     public virtual Restaurant Restaruant { get; set; }
 }

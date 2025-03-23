@@ -6,10 +6,4 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <ItemGroup>
-      <Folder Include="Models\Orders\" />
-      <Folder Include="Models\Reservations\" />
-      <Folder Include="OrderItems\" />
-    </ItemGroup>
-
 </Project>

@@ -21,5 +21,5 @@ public class Employee
     [Required]
     [ForeignKey(nameof(Restaurant))]
     public long RestaurantId { get; set; }
-    public virtual Restaurant Restaruant { get; set; }
+    public virtual Restaurant Restaurant { get; set; }
 }

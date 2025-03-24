@@ -1,4 +1,4 @@
-﻿namespace RestaurantReservation.Domain;
+﻿namespace RestaurantReservation.Domain.Models;
 
 public class Class1
 {

@@ -16,9 +16,9 @@ public class OrderItem
     public virtual Order Order { get; set; }
     
     [Required]
-    [ForeignKey(nameof(Item))]
+    [ForeignKey(nameof(MenuItem))]
     public long ItemId { get; set; }
-    public virtual Item Item { get; set; }
+    public virtual MenuItem MenuItem { get; set; }
     
     [Required]
     public int  Quantity { get; set; }

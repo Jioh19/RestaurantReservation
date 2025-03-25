@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using RestaurantReservation.Domain.EntityReferences;
 using RestaurantReservation.Domain.Models.Employees;
 using RestaurantReservation.Domain.Models.Reservations;
 
@@ -14,5 +15,8 @@ public class Order
     public virtual Employee Employee { get; set; }
     public DateTime OrderDate { get; set; }
     public decimal TotalAmount { get; set; }
+    
+    public List<OrderItemReference> OrderItems { get; set; } = new();
+
     
 }

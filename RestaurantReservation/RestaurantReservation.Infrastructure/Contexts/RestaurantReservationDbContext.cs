@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using RestaurantReservation.Domain.Models.Customers;
 using RestaurantReservation.Domain.Models.Employees;
 using RestaurantReservation.Domain.Models.MenuItems;
 using RestaurantReservation.Domain.Models.Orders;
 using RestaurantReservation.Domain.Models.Reservations;
 using RestaurantReservation.Domain.Models.Restaurants;
 using RestaurantReservation.Domain.Models.Tables;
+using RestaurantReservation.Infrastructure.Customers.Models;
 
 namespace RestaurantReservation.Infrastructure.Contexts;
 
@@ -18,7 +18,7 @@ public class RestaurantReservationDbContext : DbContext
 
     // DbSets for each entity
     public DbSet<Restaurant> Restaurants { get; set; }
-    public DbSet<Customer> Customers { get; set; }
+    public DbSet<CustomerTypeConfiguration> Customers { get; set; }
     public DbSet<Employee> Employees { get; set; }
     public DbSet<Table> Tables { get; set; }
     public DbSet<MenuItem> MenuItems { get; set; }

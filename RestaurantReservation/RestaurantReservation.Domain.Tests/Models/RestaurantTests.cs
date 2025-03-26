@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using FluentAssertions;
 using RestaurantReservation.Domain.Models.Restaurants;
 

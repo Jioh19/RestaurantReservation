@@ -1,8 +1,5 @@
-
-using System;
-using Xunit;
 using FluentAssertions;
-using System.ComponentModel.DataAnnotations;
+
 using RestaurantReservation.Domain.Models.Customers;
 
 namespace RestaurantReservation.Domain.Tests.Models

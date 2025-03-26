@@ -5,7 +5,7 @@ namespace RestaurantReservation.Domain.Models.MenuItems;
 
 public class MenuItem
 {
-    public int ItemId { get; set; }
+    public int MenuItemId { get; set; }
     public long RestaurantId { get; set; }
     public virtual Restaurant  Restaurant { get; set; }
     public string Name { get; set; }

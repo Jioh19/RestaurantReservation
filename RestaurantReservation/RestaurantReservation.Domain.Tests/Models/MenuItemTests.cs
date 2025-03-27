@@ -18,7 +18,7 @@ public class MenuItemTests
 
         var menuItem = new MenuItem
         {
-            ItemId = 1,
+            MenuItemId = 1,
             RestaurantId = restaurant.RestaurantId,
             Restaurant = restaurant,
             Name = "Margherita Pizza",
@@ -27,7 +27,7 @@ public class MenuItemTests
         };
 
         // Assert
-        menuItem.ItemId.Should().Be(1);
+        menuItem.MenuItemId.Should().Be(1);
         menuItem.RestaurantId.Should().Be(1);
         menuItem.Restaurant.Should().Be(restaurant);
         menuItem.Name.Should().Be("Margherita Pizza");

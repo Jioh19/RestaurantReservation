@@ -2,6 +2,7 @@
 using RestaurantReservation.Domain.Models.Customers;
 using RestaurantReservation.Domain.Repository;
 using RestaurantReservation.Infrastructure.Contexts;
+using RestaurantReservation.Infrastructure.Mappers;
 
 namespace RestaurantReservation.Infrastructure.Customers.Repositories;
 
@@ -23,7 +24,8 @@ public class CustomerSQLRepository : ICustomerRepository
     //Poner atencion a los nullable ?
     public async Task<Customer?> GetByIdAsync(long id)
     {
-        return await _context.Set<Customer>().FirstOrDefaultAsync(c => c.CustomerId == id);
+        var customer =  await _context.Set<Customer>().FirstOrDefaultAsync(c => c.CustomerId == id);
+        return customer?.ToDomain();
     }
 
     public async Task<Customer> AddAsync(Customer customer)
@@ -48,4 +50,8 @@ public class CustomerSQLRepository : ICustomerRepository
         _context.Set<Customer>().Remove(customer);
         await _context.SaveChangesAsync();
     }
+}
+
+public class DomainCustomer
+{
 }

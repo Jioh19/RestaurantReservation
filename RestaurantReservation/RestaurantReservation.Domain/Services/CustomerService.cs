@@ -29,4 +29,14 @@ public class CustomerService
         var response = await _customerRepository.AddAsync(customer);
         return response;
     }
+    
+    public async Task UpdateCustomerAsync(Customer customer)
+    {
+        await _customerRepository.UpdateAsync(customer);
+    }
+    
+    public async Task DeleteCustomerAsync(long id)
+    {
+        await _customerRepository.DeleteAsync(id);
+    }
 }

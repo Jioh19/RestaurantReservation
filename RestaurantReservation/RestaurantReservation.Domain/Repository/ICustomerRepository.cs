@@ -1,8 +1,7 @@
-
-using RestaurantReservation.Domain.Models.Customers;
+using RestaurantReservation.Domain.Customers.Models;
 
 namespace RestaurantReservation.Domain.Repository;
 
-public interface ICustomerRepository : IRepository<DomainCustomer>
+public interface ICustomerRepository : IRepository<Customer>
 {
 }

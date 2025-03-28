@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace RestaurantReservation.Api.Migrations
+namespace RestaurantReservation.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration

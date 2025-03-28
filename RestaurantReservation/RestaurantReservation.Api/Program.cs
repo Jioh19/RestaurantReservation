@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Domain.Repository;
-using RestaurantReservation.Domain.Services;
+using RestaurantReservation.Domain.Customers.Services;
 using RestaurantReservation.Infrastructure.Contexts;
 using RestaurantReservation.Infrastructure.Customers.Repositories;
 
@@ -12,7 +12,7 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<RestaurantReservationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
-        x => x.MigrationsAssembly("RestaurantReservation.Api")
+        x => x.MigrationsAssembly(typeof(RestaurantReservationDbContext).Assembly)
         )
     );
 builder.Services.AddControllers();
@@ -35,9 +35,11 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthorization();
 
+#pragma warning disable ASP0014
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
 });
+#pragma warning restore ASP0014
 
 app.Run();

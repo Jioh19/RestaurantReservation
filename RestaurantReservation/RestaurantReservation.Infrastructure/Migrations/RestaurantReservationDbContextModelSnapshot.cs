@@ -8,7 +8,7 @@ using RestaurantReservation.Infrastructure.Contexts;
 
 #nullable disable
 
-namespace RestaurantReservation.Api.Migrations
+namespace RestaurantReservation.Infrastructure.Migrations
 {
     [DbContext(typeof(RestaurantReservationDbContext))]
     partial class RestaurantReservationDbContextModelSnapshot : ModelSnapshot

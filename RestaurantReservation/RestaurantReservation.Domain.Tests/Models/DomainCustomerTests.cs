@@ -1,6 +1,5 @@
-using FluentAssertions;
 using FluentAssertions.Execution;
-using RestaurantReservation.Domain.Models.Customers;
+using RestaurantReservation.Domain.Customers.Models;
 
 namespace RestaurantReservation.Domain.Tests.Models
 {
@@ -10,9 +9,9 @@ namespace RestaurantReservation.Domain.Tests.Models
         public void Customer_WithValidData_ShouldBeValid()
         {
             // Arrange
-            var customer = new DomainCustomer
+            var customer = new Customer
             {
-                CustomerId = 1,
+                Id = 1,
                 FirstName = "Juan",
                 LastName = "Oh",
                 Email = "jioh@mail.com",
@@ -22,7 +21,7 @@ namespace RestaurantReservation.Domain.Tests.Models
             // Act & Assert
             using (new AssertionScope())
             {
-                customer.CustomerId.Should().Be(1);
+                customer.Id.Should().Be(1);
                 customer.FirstName.Should().Be("Juan");
                 customer.LastName.Should().Be("Oh");
                 customer.Email.Should().Be("jioh@mail.com");

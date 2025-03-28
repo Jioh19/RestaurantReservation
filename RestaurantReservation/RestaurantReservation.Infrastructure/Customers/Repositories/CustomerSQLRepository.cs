@@ -1,15 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using RestaurantReservation.Domain.Models.Customers;
+using DomainCustomer = RestaurantReservation.Domain.Customers.Models.Customer;
 using RestaurantReservation.Domain.Repository;
 using RestaurantReservation.Infrastructure.Contexts;
-using RestaurantReservation.Infrastructure.Mappers;
+using RestaurantReservation.Infrastructure.Customers.Mappers;
 
 namespace RestaurantReservation.Infrastructure.Customers.Repositories;
 
-public class CustomerSQLRepository : ICustomerRepository
+public class CustomerSQLRepository : ICustomerRepository 
 {
-
     private readonly RestaurantReservationDbContext _context;
     private readonly ILogger<CustomerSQLRepository> _logger;
 
@@ -28,7 +27,7 @@ public class CustomerSQLRepository : ICustomerRepository
     
     public async Task<DomainCustomer?> GetByIdAsync(long id)
     {
-        var customer =  await _context.Customers.FirstOrDefaultAsync(c => c.CustomerId == id);
+        var customer =  await _context.Customers.FirstOrDefaultAsync(c => c.Id == id);
         return customer?.ToDomain();
     }
 
@@ -39,22 +38,23 @@ public class CustomerSQLRepository : ICustomerRepository
         return domainCustomer;
     }
 
-    public async Task<DomainCustomer> UpdateAsync(DomainCustomer domainCustomer)
+    public async Task<DomainCustomer?> UpdateAsync(DomainCustomer domainCustomer)
     {
-        var customer = await _context.Customers.FirstOrDefaultAsync(c => c.CustomerId == domainCustomer.CustomerId);
+        var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id == domainCustomer.Id);
         if (customer is null) 
         {
             return null; // The customer with the given Id did not exist.
         }
+        CustomerMapper.UpdateDomainToInfrastructure(domainCustomer, customer);
         _context.Customers.Update(customer);
         await _context.SaveChangesAsync();
-        return domainCustomer;
+        return customer.ToDomain();
     }
 
     public async Task DeleteAsync(long id)
     {
-        var customer = await _context.Customers.FirstOrDefaultAsync(c => c.CustomerId == id);
-        if (customer == null)
+        var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id == id);
+        if (customer is null)
             return;
         _context.Customers.Remove(customer);
         await _context.SaveChangesAsync();

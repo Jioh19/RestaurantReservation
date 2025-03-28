@@ -9,7 +9,7 @@ using RestaurantReservation.Infrastructure.Contexts;
 
 #nullable disable
 
-namespace RestaurantReservation.Api.Migrations
+namespace RestaurantReservation.Infrastructure.Migrations
 {
     [DbContext(typeof(RestaurantReservationDbContext))]
     [Migration("20250326060903_InitialCreate")]

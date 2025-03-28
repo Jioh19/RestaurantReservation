@@ -1,5 +1,4 @@
-using FluentAssertions;
-using RestaurantReservation.Domain.Models.Customers;
+using RestaurantReservation.Domain.Customers.Models;
 using RestaurantReservation.Domain.Models.Reservations;
 using RestaurantReservation.Domain.Models.Restaurants;
 using RestaurantReservation.Domain.Models.Tables;
@@ -12,9 +11,9 @@ public class ReservationTests
     public void Reservation_WithValidData_ShouldBeValid()
     {
         // Arrange
-        var customer = new DomainCustomer
+        var customer = new Customer
         {
-            CustomerId = 1,
+            Id = 1,
             FirstName = "Juan",
             LastName = "Oh"
         };
@@ -34,7 +33,7 @@ public class ReservationTests
         var reservation = new Reservation
         {
             ReservationId = 1,
-            DomainCustomer = customer,
+            Customer = customer,
             Restaurant = restaurant,
             Table = table,
             ReservationDate = DateTime.Now.AddDays(1),
@@ -43,7 +42,7 @@ public class ReservationTests
 
         // Assert
         reservation.ReservationId.Should().Be(1);
-        reservation.DomainCustomer.Should().Be(customer);
+        reservation.Customer.Should().Be(customer);
         reservation.Restaurant.Should().Be(restaurant);
         reservation.Table.Should().Be(table);
         reservation.ReservationDate.Should().BeCloseTo(DateTime.Now.AddDays(1), precision: TimeSpan.FromSeconds(1));

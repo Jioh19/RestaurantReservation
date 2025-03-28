@@ -1,6 +1,7 @@
-﻿using RestaurantReservation.Domain.Models.Customers;
+﻿using RestaurantReservation.Domain.Customers.Models;
 using RestaurantReservation.Domain.Repository;
-using RestaurantReservation.Domain.Services;
+using RestaurantReservation.Domain.Customers.Services;
+using RestaurantReservation.Domain.Errors;
 
 
 public class CustomerService :  ICustomerService
@@ -12,25 +13,29 @@ public class CustomerService :  ICustomerService
         _customerRepository = customerRepository;
     }
 
-    public async Task<DomainCustomer> GetCustomerByIdAsync(long id)
+    public async Task<Customer> GetCustomerByIdAsync(long id)
     {
         var customer = await _customerRepository.GetByIdAsync(id);
+        if (customer is null)
+        {
+            throw new EntityNotFoundException<Customer>(id.ToString());
+        }
         return customer;
     }
 
-    public async Task<IEnumerable<DomainCustomer>> GetAllCustomersAsync()
+    public async Task<IEnumerable<Customer>> GetAllCustomersAsync()
     {
         var customers = await _customerRepository.GetAllAsync();
         return customers;
     }
 
-    public async Task<DomainCustomer> AddCustomerAsync(DomainCustomer domainCustomer)
+    public async Task<Customer> AddCustomerAsync(Customer domainCustomer)
     {
         var response = await _customerRepository.AddAsync(domainCustomer);
         return response;
     }
     
-    public async Task UpdateCustomerAsync(DomainCustomer domainCustomer)
+    public async Task UpdateCustomerAsync(Customer domainCustomer)
     {
         await _customerRepository.UpdateAsync(domainCustomer);
     }

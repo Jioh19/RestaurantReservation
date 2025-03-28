@@ -1,6 +1,8 @@
-namespace DefaultNamespace;
+using RestaurantReservation.Domain.Models.Customers;
 
-public interface IEmployeeRepository: IRepository<Customer>
+namespace RestaurantReservation.Domain.Repository;
+
+public interface IEmployeeRepository: IRepository<DomainCustomer>
 {
     
 }

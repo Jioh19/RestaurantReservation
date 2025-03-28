@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentAssertions.Execution;
 using RestaurantReservation.Domain.Models.MenuItems;
 using RestaurantReservation.Domain.Models.Restaurants;
 
@@ -18,8 +19,7 @@ public class MenuItemTests
 
         var menuItem = new MenuItem
         {
-            ItemId = 1,
-            RestaurantId = restaurant.RestaurantId,
+            MenuItemId = 1,
             Restaurant = restaurant,
             Name = "Margherita Pizza",
             Description = "Classic Italian pizza with tomato and mozzarella",
@@ -27,11 +27,13 @@ public class MenuItemTests
         };
 
         // Assert
-        menuItem.ItemId.Should().Be(1);
-        menuItem.RestaurantId.Should().Be(1);
-        menuItem.Restaurant.Should().Be(restaurant);
-        menuItem.Name.Should().Be("Margherita Pizza");
-        menuItem.Description.Should().Be("Classic Italian pizza with tomato and mozzarella");
-        menuItem.Price.Should().Be(12.99m);
+        using (new AssertionScope())
+        {
+            menuItem.MenuItemId.Should().Be(1);
+            menuItem.Restaurant.Should().BeEquivalentTo(restaurant);
+            menuItem.Name.Should().Be("Margherita Pizza");
+            menuItem.Description.Should().Be("Classic Italian pizza with tomato and mozzarella");
+            menuItem.Price.Should().Be(12.99m);
+        }
     }
 }

@@ -1,19 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestaurantReservation.Domain.Models.Customers;
 using RestaurantReservation.Domain.Repository;
+using RestaurantReservation.Domain.Services;
 
 namespace RestaurantReservation.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/customer")]
 public class CustomerController : ControllerBase
 {
-    private readonly ICustomerRepository _customerRepository;
+    private readonly ICustomerService _customerService;
     private readonly ILogger<CustomerController> _logger;
 
-    public CustomerController(ICustomerRepository customerRepository, ILogger<CustomerController> logger)
+    public CustomerController(ICustomerService customerService, ILogger<CustomerController> logger)
     {
-        _customerRepository = customerRepository;
+        _customerService = customerService;
         _logger = logger;
     }
     
@@ -21,13 +22,13 @@ public class CustomerController : ControllerBase
     [HttpGet("{id}", Name = "GetCustomer")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<Customer>> GetCustomer(int id)
+    public async Task<ActionResult<DomainCustomer>> GetCustomer(int id)
     {
         try
         {
-            var customer = await _customerRepository.GetByIdAsync(id);
+            var customer = await _customerService.GetCustomerByIdAsync(id);
 
-            if (customer == null)
+            if (customer is null)
             {
                 _logger.LogWarning($"Customer with id {id} not found");
                 return NotFound($"Customer with id {id} not found");
@@ -45,11 +46,11 @@ public class CustomerController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
+    public async Task<ActionResult<IEnumerable<DomainCustomer>>> GetCustomers()
     {
         try
         {
-            var customers = await _customerRepository.GetAllAsync();
+            var customers = await _customerService.GetAllCustomersAsync();
             return Ok(customers);
         }
         catch (Exception ex)
@@ -63,16 +64,16 @@ public class CustomerController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<Customer>> CreateCustomer([FromBody] Customer customer)
+    public async Task<ActionResult<DomainCustomer>> CreateCustomer([FromBody] DomainCustomer domainCustomer)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
-        _logger.Log(LogLevel.Information, "Creating customer" +" "+ customer.FirstName);
+        _logger.Log(LogLevel.Information, "Creating customer" +" "+ domainCustomer.FirstName + "  " + domainCustomer.CustomerId);
         try
         {
-            var createdCustomer = await _customerRepository.AddAsync(customer);
+            var createdCustomer = await _customerService.AddCustomerAsync(domainCustomer);
             return CreatedAtRoute("GetCustomer", new { id = createdCustomer.CustomerId }, createdCustomer);
         }
         catch (Exception ex)
@@ -87,12 +88,12 @@ public class CustomerController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> UpdateCustomer(long id, [FromBody] Customer customer)
+    public async Task<IActionResult> UpdateCustomer(long id, [FromBody] DomainCustomer domainCustomer)
     {
-        customer.CustomerId = id;
+        domainCustomer.CustomerId = id;
         try
         {
-            await _customerRepository.UpdateAsync(customer);
+            await _customerService.UpdateCustomerAsync(domainCustomer);
             return NoContent();
         }
         catch (KeyNotFoundException)
@@ -114,7 +115,7 @@ public class CustomerController : ControllerBase
     {
         try
         {
-            await _customerRepository.DeleteAsync(id);
+            await _customerService.DeleteCustomerAsync(id);
             return NoContent();
         }
         catch (KeyNotFoundException)

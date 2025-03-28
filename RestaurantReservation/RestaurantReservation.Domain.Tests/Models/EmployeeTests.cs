@@ -22,7 +22,6 @@ namespace RestaurantReservation.Domain.Tests.Models
                 FirstName = "John",
                 LastName = "Doe",
                 Position = "Waiter",
-                RestaurantId = restaurant.RestaurantId,
                 Restaurant = restaurant,
             };
 
@@ -31,7 +30,6 @@ namespace RestaurantReservation.Domain.Tests.Models
             employee.FirstName.Should().Be("John");
             employee.LastName.Should().Be("Doe");
             employee.Position.Should().Be("Waiter");
-            employee.RestaurantId.Should().Be(1);
             employee.Restaurant.Should().Be(restaurant);
         }
     }

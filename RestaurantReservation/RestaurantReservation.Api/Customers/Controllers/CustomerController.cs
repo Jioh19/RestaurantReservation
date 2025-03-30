@@ -24,7 +24,7 @@ public class CustomerController : ControllerBase
     [HttpGet("{id}", Name = "GetCustomer")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<CustomerResponse>> GetCustomer(int id)
+    public async Task<ActionResult<CustomerResponse>> GetCustomer(long id)
     {
         try
         {
@@ -51,7 +51,7 @@ public class CustomerController : ControllerBase
         try
         {
             var customers = await _customerService.GetAllCustomersAsync();
-            return Ok(customers.Select(CustomerMapper.ToResponse).ToList());
+            return Ok(customers.Select(CustomerMapperDto.ToResponse).ToList());
         }
         catch (Exception ex)
         {
@@ -88,12 +88,12 @@ public class CustomerController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> UpdateCustomer(long id, [FromBody] CustomerRequest domainCustomer)
+    public async Task<IActionResult> UpdateCustomer(long id, [FromBody] CustomerRequest customerRequest)
     {
-        domainCustomer.Id = id;
         try
         {
-            await _customerService.UpdateCustomerAsync(domainCustomer.ToDomain());
+            customerRequest.Id = id;
+            await _customerService.UpdateCustomerAsync(customerRequest.ToDomain());
             return NoContent();
         }
         catch (KeyNotFoundException)

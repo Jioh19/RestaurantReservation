@@ -5,7 +5,7 @@ using Riok.Mapperly.Abstractions;
 namespace RestaurantReservation.Api.Customers.Mappers;
 
 [Mapper]
-public static partial class CustomerMapper
+public static partial class CustomerMapperDto
 {
     public static partial CustomerResponse ToResponse(this DomainCustomer source);
     

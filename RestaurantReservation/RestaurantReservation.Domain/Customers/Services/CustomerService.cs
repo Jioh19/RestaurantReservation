@@ -1,5 +1,6 @@
-﻿using RestaurantReservation.Domain.Customers.Models;
-using RestaurantReservation.Domain.Repository;
+﻿using System.Collections.Immutable;
+using RestaurantReservation.Domain.Customers.Models;
+using RestaurantReservation.Domain.Repositories;
 using RestaurantReservation.Domain.Customers.Services;
 using RestaurantReservation.Domain.Errors;
 
@@ -23,10 +24,10 @@ public class CustomerService :  ICustomerService
         return customer;
     }
 
-    public async Task<IEnumerable<Customer>> GetAllCustomersAsync()
+    public async Task<IReadOnlyCollection<Customer>> GetAllCustomersAsync()
     {
         var customers = await _customerRepository.GetAllAsync();
-        return customers;
+        return customers.ToImmutableList();
     }
 
     public async Task<Customer> AddCustomerAsync(Customer domainCustomer)

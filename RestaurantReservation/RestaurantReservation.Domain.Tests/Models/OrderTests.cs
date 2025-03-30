@@ -18,7 +18,7 @@ public class OrderTests
 
         var employee = new Employee
         {
-            EmployeeId = 1,
+            Id = 1,
             FirstName = "John",
             LastName = "Doe",
             Position = "Waiter"

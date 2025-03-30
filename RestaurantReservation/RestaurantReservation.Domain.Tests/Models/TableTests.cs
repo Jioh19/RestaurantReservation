@@ -1,6 +1,6 @@
-using FluentAssertions;
-using RestaurantReservation.Domain.Models.Restaurants;
+
 using RestaurantReservation.Domain.Models.Tables;
+using RestaurantReservation.Domain.Restaurants.Models;
 
 namespace RestaurantReservation.Domain.Tests.Models;
 
@@ -12,7 +12,7 @@ public class TableTests
         // Arrange
         var restaurant = new Restaurant
         {
-            RestaurantId = 1,
+            Id = 1,
             Name = "Test Restaurant"
         };
 

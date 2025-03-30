@@ -1,4 +1,4 @@
-namespace RestaurantReservation.Domain.Repository;
+namespace RestaurantReservation.Domain.Repositories;
 public interface IRepository<T> where T : class
 {
     Task<IEnumerable<T>> GetAllAsync();

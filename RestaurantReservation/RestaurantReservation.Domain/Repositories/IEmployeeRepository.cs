@@ -1,6 +1,6 @@
 using RestaurantReservation.Domain.Models.Employees;
 
-namespace RestaurantReservation.Domain.Repository;
+namespace RestaurantReservation.Domain.Repositories;
 
 public interface IEmployeeRepository: IRepository<Employee>
 {

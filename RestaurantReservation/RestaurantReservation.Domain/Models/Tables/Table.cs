@@ -1,5 +1,5 @@
 
-using RestaurantReservation.Domain.Models.Restaurants;
+using RestaurantReservation.Domain.Restaurants.Models;
 
 namespace RestaurantReservation.Domain.Models.Tables;
 

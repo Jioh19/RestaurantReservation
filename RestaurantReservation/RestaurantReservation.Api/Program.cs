@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using RestaurantReservation.Domain.Repository;
+using RestaurantReservation.Domain.Repositories;
 using RestaurantReservation.Domain.Customers.Services;
 using RestaurantReservation.Infrastructure.Contexts;
 using RestaurantReservation.Infrastructure.Customers.Repositories;
@@ -20,7 +20,7 @@ builder.Services.AddLogging();
 builder.Services.AddEndpointsApiExplorer();
 
 // Register repositories and services
-builder.Services.AddScoped<ICustomerRepository, CustomerSQLRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 var app = builder.Build();

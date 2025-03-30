@@ -1,18 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using DomainCustomer = RestaurantReservation.Domain.Customers.Models.Customer;
-using RestaurantReservation.Domain.Repository;
+using RestaurantReservation.Domain.Repositories;
 using RestaurantReservation.Infrastructure.Contexts;
 using RestaurantReservation.Infrastructure.Customers.Mappers;
 
 namespace RestaurantReservation.Infrastructure.Customers.Repositories;
 
-public class CustomerSQLRepository : ICustomerRepository 
+public class CustomerRepository : ICustomerRepository 
 {
     private readonly RestaurantReservationDbContext _context;
-    private readonly ILogger<CustomerSQLRepository> _logger;
+    private readonly ILogger<CustomerRepository> _logger;
 
-    public CustomerSQLRepository(RestaurantReservationDbContext context, ILogger<CustomerSQLRepository> logger)
+    public CustomerRepository(RestaurantReservationDbContext context, ILogger<CustomerRepository> logger)
     {
         _context = context;
         _logger = logger;

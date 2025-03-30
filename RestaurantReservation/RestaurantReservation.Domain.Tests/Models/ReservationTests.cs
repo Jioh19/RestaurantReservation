@@ -1,6 +1,6 @@
 using RestaurantReservation.Domain.Customers.Models;
 using RestaurantReservation.Domain.Models.Reservations;
-using RestaurantReservation.Domain.Models.Tables;
+using RestaurantReservation.Domain.Tables.Models;
 using RestaurantReservation.Domain.Restaurants.Models;
 
 namespace RestaurantReservation.Domain.Tests.Models;
@@ -26,7 +26,7 @@ public class ReservationTests
 
         var table = new Table
         {
-            TableId = 1,
+            Id = 1,
             Capacity = 4
         };
 

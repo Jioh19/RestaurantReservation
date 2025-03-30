@@ -33,9 +33,9 @@ public class CustomerSQLRepository : ICustomerRepository
 
     public async Task<DomainCustomer> AddAsync(DomainCustomer domainCustomer)
     {
-        await _context.Customers.AddAsync(domainCustomer.ToEntity());
+        var response = await _context.Customers.AddAsync(domainCustomer.ToEntity());
         await _context.SaveChangesAsync();
-        return domainCustomer;
+        return response.Entity.ToDomain();
     }
 
     public async Task<DomainCustomer?> UpdateAsync(DomainCustomer domainCustomer)

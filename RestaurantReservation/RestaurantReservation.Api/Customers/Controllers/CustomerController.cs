@@ -70,7 +70,7 @@ public class CustomerController : ControllerBase
         {
             return BadRequest(ModelState);
         }
-        _logger.Log(LogLevel.Information, $"Creating customer {customerRequest.FirstName} {customerRequest.Id}");
+        _logger.Log(LogLevel.Information, $"Creating customer {customerRequest.FirstName}");
         try
         {
             var createdCustomer = await _customerService.AddCustomerAsync(customerRequest.ToDomain());

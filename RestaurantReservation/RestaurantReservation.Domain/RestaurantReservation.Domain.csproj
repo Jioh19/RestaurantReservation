@@ -10,4 +10,8 @@
       <PackageReference Include="Riok.Mapperly" Version="4.2.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Models\Orders\" />
+    </ItemGroup>
+
 </Project>

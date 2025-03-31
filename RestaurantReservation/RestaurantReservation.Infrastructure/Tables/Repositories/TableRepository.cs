@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RestaurantReservation.Domain.Repositories;
-using RestaurantReservation.Domain.Restaurants.Models;
 using RestaurantReservation.Infrastructure.Contexts;
 using RestaurantReservation.Infrastructure.Tables.Mappers;
 using DomainTable = RestaurantReservation.Domain.Tables.Models.Table;
@@ -48,16 +47,6 @@ public class TableRepository : ITableRepository
             _logger.LogError("Table not found");
             return null;
         }
-        
-        var restaurant =  await _context.Restaurants.FindAsync(domainTable.RestaurantId);
-        if (restaurant is null)
-        {
-            _logger.LogError("Restaurant not found");
-            return null;
-        }
-
-        table.Restaurant = restaurant;
-        _logger.LogInformation("Updating Table" + " " + table.Restaurant.Name);
         TableMapper.UpdateDomainToInfrastructure(domainTable, table);
         _context.Tables.Update(table);
         await _context.SaveChangesAsync();

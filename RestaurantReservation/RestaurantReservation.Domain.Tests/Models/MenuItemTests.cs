@@ -1,6 +1,6 @@
 using FluentAssertions;
 using FluentAssertions.Execution;
-using RestaurantReservation.Domain.Models.MenuItems;
+using RestaurantReservation.Domain.MenuItems.Models;
 using RestaurantReservation.Domain.Restaurants.Models;
 
 namespace RestaurantReservation.Domain.Tests.Models;

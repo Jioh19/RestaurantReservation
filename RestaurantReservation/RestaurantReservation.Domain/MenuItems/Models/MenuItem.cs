@@ -1,7 +1,7 @@
 
 using RestaurantReservation.Domain.Restaurants.Models;
 
-namespace RestaurantReservation.Domain.Models.MenuItems;
+namespace RestaurantReservation.Domain.MenuItems.Models;
 
 public class MenuItem
 {

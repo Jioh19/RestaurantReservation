@@ -13,7 +13,7 @@ public class OrderTests
         // Arrange
         var reservation = new Reservation
         {
-            ReservationId = 1,
+            Id = 1,
         };
 
         var employee = new Employee

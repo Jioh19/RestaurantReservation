@@ -1,5 +1,5 @@
 using FluentAssertions;
-using RestaurantReservation.Domain.Models.Employees;
+using RestaurantReservation.Domain.Employees.Models;
 using RestaurantReservation.Domain.Restaurants.Models;
 
 namespace RestaurantReservation.Domain.Tests.Models
@@ -22,7 +22,7 @@ namespace RestaurantReservation.Domain.Tests.Models
                 FirstName = "John",
                 LastName = "Doe",
                 Position = "Waiter",
-                Restaurant = restaurant,
+                RestaurantId = restaurant.Id,
             };
 
             // Assert
@@ -30,7 +30,7 @@ namespace RestaurantReservation.Domain.Tests.Models
             employee.FirstName.Should().Be("John");
             employee.LastName.Should().Be("Doe");
             employee.Position.Should().Be("Waiter");
-            employee.Restaurant.Should().Be(restaurant);
+            employee.RestaurantId.Should().Be(restaurant.Id);
         }
     }
 }

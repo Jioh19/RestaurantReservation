@@ -1,7 +1,6 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+
+using RestaurantReservation.Domain.Employees.Models;
 using RestaurantReservation.Domain.EntityReferences;
-using RestaurantReservation.Domain.Models.Employees;
 using RestaurantReservation.Domain.Models.Reservations;
 
 namespace RestaurantReservation.Domain.Models.Orders;

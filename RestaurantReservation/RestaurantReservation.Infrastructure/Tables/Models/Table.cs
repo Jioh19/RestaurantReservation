@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RestaurantReservation.Infrastructure.Restaurants.Models;
-using RestaurantReservation.Infrastructure.Tables.Models;
 using Riok.Mapperly.Abstractions;
 
 namespace RestaurantReservation.Infrastructure.Tables.Models;

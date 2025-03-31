@@ -1,6 +1,6 @@
 using RestaurantReservation.Domain.Restaurants.Models;
 
-namespace RestaurantReservation.Domain.Models.Employees;
+namespace RestaurantReservation.Domain.Employees.Models;
 
 public class Employee
 {
@@ -8,5 +8,5 @@ public class Employee
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Position { get; set; }
-    public virtual Restaurant Restaurant { get; set; }
+    public long RestaurantId { get; set; }
 }

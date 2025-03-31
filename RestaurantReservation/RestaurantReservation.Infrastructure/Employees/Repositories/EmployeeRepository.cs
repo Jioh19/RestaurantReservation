@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using RestaurantReservation.Domain.Repositories;
 using RestaurantReservation.Infrastructure.Contexts;
 using RestaurantReservation.Infrastructure.Employees.Mappers;
-using RestaurantReservation.Infrastructure.Restaurants.Models;
 using DomainEmployee = RestaurantReservation.Domain.Employees.Models.Employee;
 
 namespace RestaurantReservation.Infrastructure.Employees.Repositories;

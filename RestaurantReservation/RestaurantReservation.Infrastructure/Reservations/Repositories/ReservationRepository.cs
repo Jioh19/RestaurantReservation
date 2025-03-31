@@ -1,0 +1,75 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using RestaurantReservation.Domain.Repositories;
+using RestaurantReservation.Infrastructure.Contexts;
+using RestaurantReservation.Infrastructure.Reservations.Mappers;
+using DomainReservation = RestaurantReservation.Domain.Reservations.Models.Reservation;
+
+namespace RestaurantReservation.Infrastructure.Reservations.Repositories;
+
+public class ReservationRepository :  IReservationRepository
+{
+    private readonly RestaurantReservationDbContext _context;
+    private readonly ILogger<ReservationRepository> _logger;
+
+    public ReservationRepository(RestaurantReservationDbContext context, ILogger<ReservationRepository> logger)
+    {
+        _context = context;
+        _logger = logger;
+    }
+    
+    public async Task<IEnumerable<DomainReservation>> GetAllAsync()
+    {
+        var reservations = await _context.Reservations.ToListAsync();
+        _logger.LogInformation("Getting all Reservations" + " " + reservations.Count);
+        return reservations.Select(t => t.ToDomain()).ToList();
+    }
+
+    public async Task<DomainReservation?> GetByIdAsync(long id)
+    {
+        var reservation = await _context.Reservations.FindAsync(id);
+        return reservation?.ToDomain();
+    }
+
+    public async Task<DomainReservation> AddAsync(DomainReservation domainReservation)
+    {
+        var response = await _context.Reservations.AddAsync(domainReservation.ToEntity());
+        await _context.SaveChangesAsync();
+        return response.Entity.ToDomain();
+    }
+
+    public async Task<DomainReservation?> UpdateAsync(DomainReservation domainReservation)
+    {
+        var reservation = await _context.Reservations.FindAsync(domainReservation.Id);
+        if (reservation is null)
+        {
+            _logger.LogError("Reservation not found");
+            return null;
+        }
+        
+        var restaurant =  await _context.Restaurants.FindAsync(domainReservation.RestaurantId);
+        if (restaurant is null)
+        {
+            _logger.LogError("Restaurant not found");
+            return null;
+        }
+
+        reservation.Restaurant = restaurant;
+        _logger.LogInformation("Updating Reservation" + " " + reservation.Restaurant.Name);
+        ReservationMapper.UpdateDomainToInfrastructure(domainReservation, reservation);
+        _context.Reservations.Update(reservation);
+        await _context.SaveChangesAsync();
+        return reservation.ToDomain();
+    }
+
+    public async Task DeleteAsync(long id)
+    {
+        var reservation = await _context.Reservations.FirstOrDefaultAsync(t => t.Id == id);
+        if (reservation is null)
+        {
+            return;
+        }
+        _context.Reservations.Remove(reservation);
+        await _context.SaveChangesAsync();
+    }
+}

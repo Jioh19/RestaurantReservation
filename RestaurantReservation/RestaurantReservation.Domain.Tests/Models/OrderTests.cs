@@ -1,7 +1,7 @@
 using FluentAssertions;
 using RestaurantReservation.Domain.Employees.Models;
 using RestaurantReservation.Domain.Models.Orders;
-using RestaurantReservation.Domain.Models.Reservations;
+using RestaurantReservation.Domain.Reservations.Models;
 
 namespace RestaurantReservation.Domain.Tests.Models;
 
@@ -13,7 +13,7 @@ public class OrderTests
         // Arrange
         var reservation = new Reservation
         {
-            ReservationId = 1,
+            Id = 1,
         };
 
         var employee = new Employee

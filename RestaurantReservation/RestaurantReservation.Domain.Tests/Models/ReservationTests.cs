@@ -1,5 +1,5 @@
 using RestaurantReservation.Domain.Customers.Models;
-using RestaurantReservation.Domain.Models.Reservations;
+using RestaurantReservation.Domain.Reservations.Models;
 using RestaurantReservation.Domain.Tables.Models;
 using RestaurantReservation.Domain.Restaurants.Models;
 
@@ -32,19 +32,19 @@ public class ReservationTests
 
         var reservation = new Reservation
         {
-            ReservationId = 1,
-            Customer = customer,
-            Restaurant = restaurant,
-            Table = table,
+            Id = 1,
+            CustomerId = customer.Id,
+            RestaurantId = restaurant.Id,
+            TableId = table.Id,
             ReservationDate = DateTime.Now.AddDays(1),
             PartySize = 2
         };
 
         // Assert
-        reservation.ReservationId.Should().Be(1);
-        reservation.Customer.Should().Be(customer);
-        reservation.Restaurant.Should().Be(restaurant);
-        reservation.Table.Should().Be(table);
+        reservation.Id.Should().Be(1);
+        reservation.CustomerId.Should().Be(customer.Id);
+        reservation.RestaurantId.Should().Be(restaurant.Id);
+        reservation.TableId.Should().Be(table.Id);
         reservation.ReservationDate.Should().BeCloseTo(DateTime.Now.AddDays(1), precision: TimeSpan.FromSeconds(1));
         reservation.PartySize.Should().Be(2);
     }

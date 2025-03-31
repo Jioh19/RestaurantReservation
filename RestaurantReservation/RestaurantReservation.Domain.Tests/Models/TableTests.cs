@@ -1,5 +1,5 @@
 
-using RestaurantReservation.Domain.Models.Tables;
+using RestaurantReservation.Domain.Tables.Models;
 using RestaurantReservation.Domain.Restaurants.Models;
 
 namespace RestaurantReservation.Domain.Tests.Models;
@@ -18,13 +18,13 @@ public class TableTests
 
         var table = new Table
         {
-            TableId = 1,
+            Id = 1,
             Restaurant = restaurant,
             Capacity = 4
         };
 
         // Assert
-        table.TableId.Should().Be(1);
+        table.Id.Should().Be(1);
         table.Restaurant.Should().Be(restaurant);
         table.Capacity.Should().Be(4);
     }

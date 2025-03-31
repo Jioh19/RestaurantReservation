@@ -1,6 +1,6 @@
 
 using RestaurantReservation.Domain.Customers.Models;
-using RestaurantReservation.Domain.Models.Tables;
+using RestaurantReservation.Domain.Tables.Models;
 using RestaurantReservation.Domain.Restaurants.Models;
 
 namespace RestaurantReservation.Domain.Models.Reservations;

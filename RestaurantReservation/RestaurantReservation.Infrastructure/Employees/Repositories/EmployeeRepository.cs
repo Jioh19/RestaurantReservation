@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using RestaurantReservation.Domain.Repositories;
 using RestaurantReservation.Infrastructure.Contexts;
 using RestaurantReservation.Infrastructure.Employees.Mappers;
 using RestaurantReservation.Infrastructure.Restaurants.Models;
@@ -7,7 +8,7 @@ using DomainEmployee = RestaurantReservation.Domain.Employees.Models.Employee;
 
 namespace RestaurantReservation.Infrastructure.Employees.Repositories;
 
-public class EmployeeRepository
+public class EmployeeRepository :  IEmployeeRepository
 {
     private readonly RestaurantReservationDbContext _context;
     private readonly ILogger<EmployeeRepository> _logger;

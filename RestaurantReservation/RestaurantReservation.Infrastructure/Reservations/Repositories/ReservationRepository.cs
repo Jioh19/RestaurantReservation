@@ -46,15 +46,6 @@ public class ReservationRepository :  IReservationRepository
             _logger.LogError("Reservation not found");
             return null;
         }
-        
-        var restaurant =  await _context.Restaurants.FindAsync(domainReservation.RestaurantId);
-        if (restaurant is null)
-        {
-            _logger.LogError("Restaurant not found");
-            return null;
-        }
-
-        reservation.Restaurant = restaurant;
         _logger.LogInformation("Updating Reservation" + " " + reservation.Restaurant.Name);
         ReservationMapper.UpdateDomainToInfrastructure(domainReservation, reservation);
         _context.Reservations.Update(reservation);

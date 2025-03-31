@@ -42,14 +42,21 @@ public class TableRepository : ITableRepository
 
     public async Task<DomainTable?> UpdateAsync(DomainTable domainTable)
     {
-        _logger.LogInformation("Entre al repositorio de Table");
         var table = await _context.Tables.FindAsync(domainTable.Id);
         if (table is null)
         {
             _logger.LogError("Table not found");
             return null;
         }
-        table.Restaurant = await _context.Restaurants.FindAsync(domainTable.RestaurantId);
+        
+        var restaurant =  await _context.Restaurants.FindAsync(domainTable.RestaurantId);
+        if (restaurant is null)
+        {
+            _logger.LogError("Restaurant not found");
+            return null;
+        }
+
+        table.Restaurant = restaurant;
         _logger.LogInformation("Updating Table" + " " + table.Restaurant.Name);
         TableMapper.UpdateDomainToInfrastructure(domainTable, table);
         _context.Tables.Update(table);

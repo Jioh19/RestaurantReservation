@@ -23,6 +23,8 @@
 
     <ItemGroup>
       <Folder Include="Customers\" />
+      <Folder Include="Employees\Controllers\" />
+      <Folder Include="Employees\Mappers\" />
     </ItemGroup>
 
 </Project>

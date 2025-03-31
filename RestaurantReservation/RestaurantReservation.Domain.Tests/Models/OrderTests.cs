@@ -1,5 +1,5 @@
 using FluentAssertions;
-using RestaurantReservation.Domain.Models.Employees;
+using RestaurantReservation.Domain.Employees.Models;
 using RestaurantReservation.Domain.Models.Orders;
 using RestaurantReservation.Domain.Models.Reservations;
 

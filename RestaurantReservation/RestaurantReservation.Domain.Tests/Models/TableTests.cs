@@ -19,13 +19,13 @@ public class TableTests
         var table = new Table
         {
             Id = 1,
-            Restaurant = restaurant,
+            RestaurantId = restaurant.Id,
             Capacity = 4
         };
 
         // Assert
         table.Id.Should().Be(1);
-        table.Restaurant.Should().Be(restaurant);
+        table.RestaurantId.Should().Be(restaurant.Id);
         table.Capacity.Should().Be(4);
     }
 }

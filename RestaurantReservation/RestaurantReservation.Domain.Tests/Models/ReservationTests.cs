@@ -1,5 +1,5 @@
 using RestaurantReservation.Domain.Customers.Models;
-using RestaurantReservation.Domain.Models.Reservations;
+using RestaurantReservation.Domain.Reservations.Models;
 using RestaurantReservation.Domain.Tables.Models;
 using RestaurantReservation.Domain.Restaurants.Models;
 

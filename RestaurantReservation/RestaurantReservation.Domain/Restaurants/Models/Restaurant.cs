@@ -1,4 +1,6 @@
 
+using RestaurantReservation.Domain.Tables.Models;
+
 namespace RestaurantReservation.Domain.Restaurants.Models;
 
 public class Restaurant

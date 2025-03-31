@@ -1,31 +1,49 @@
-﻿using RestaurantReservation.Domain.Tables.Models;
+﻿using RestaurantReservation.Domain.Errors;
+using RestaurantReservation.Domain.Repositories;
+using RestaurantReservation.Domain.Tables.Models;
+using RestaurantReservation.Domain.Tables.Services;
 
-namespace RestaurantReservation.Domain.Tables.Services;
+namespace TableReservation.Domain.Tables.Services;
 
 public class TableService : ITableService
 {
-    public async Task<Table> GetRestaurantByIdAsync(long id)
+    private readonly ITableRepository _tableRepository;
+
+    public TableService(ITableRepository tableRepository)
     {
-        throw new NotImplementedException();
+        _tableRepository = tableRepository;
     }
 
-    public async Task<IReadOnlyCollection<Table>> GetAllRestaurantsAsync()
+    public async Task<Table> GetTableByIdAsync(long id)
     {
-        throw new NotImplementedException();
+        var table = await _tableRepository.GetByIdAsync(id);
+        if (table == null)
+        {
+            throw new EntityNotFoundException<Table>(id.ToString());
+        }
+
+        return table;
     }
 
-    public async Task<Table> AddRestaurantAsync(Table domainTable)
+    public async Task<IReadOnlyCollection<Table>> GetAllTablesAsync()
     {
-        throw new NotImplementedException();
+        var tables = await _tableRepository.GetAllAsync();
+        return tables.ToList();
     }
 
-    public async Task UpdateRestaurantAsync(Table domainTable)
+    public async Task<Table> AddTableAsync(Table domainTable)
     {
-        throw new NotImplementedException();
+        var table = await _tableRepository.AddAsync(domainTable);
+        return table;
     }
 
-    public async Task DeleteRestaurantAsync(long id)
+    public async Task UpdateTableAsync(Table domainTable)
     {
-        throw new NotImplementedException();
+        await _tableRepository.UpdateAsync(domainTable);
+    }
+
+    public async Task DeleteTableAsync(long id)
+    {
+        await _tableRepository.DeleteAsync(id);
     }
 }

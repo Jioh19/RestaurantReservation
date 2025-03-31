@@ -7,6 +7,7 @@ namespace RestaurantReservation.Infrastructure.Tables.Mappers;
 [Mapper]
 public static partial class TableMapper
 {
+
     public static partial DomainTable ToDomain(this Table source);
     
     public static partial Table ToEntity(this DomainTable source);

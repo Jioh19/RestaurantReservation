@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using RestaurantReservation.Infrastructure.Tables.Models;
 
 namespace RestaurantReservation.Infrastructure.Restaurants.Models;
 

@@ -20,6 +20,7 @@ public class RestaurantReservationDbContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(Customer).Assembly);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(Restaurant).Assembly);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(Table).Assembly);
+        
         base.OnModelCreating(modelBuilder);
     }
     

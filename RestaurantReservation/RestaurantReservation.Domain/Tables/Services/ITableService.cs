@@ -4,9 +4,9 @@ namespace RestaurantReservation.Domain.Tables.Services;
 
 public interface ITableService
 {
-    Task<Table> GetRestaurantByIdAsync(long id);
-    Task<IReadOnlyCollection<Table>> GetAllRestaurantsAsync();
-    Task<Table> AddRestaurantAsync(Table domainTable);
-    Task UpdateRestaurantAsync(Table domainTable);
-    Task DeleteRestaurantAsync(long id);
+    Task<Table> GetTableByIdAsync(long id);
+    Task<IReadOnlyCollection<Table>> GetAllTablesAsync();
+    Task<Table> AddTableAsync(Table domainTable);
+    Task UpdateTableAsync(Table domainTable);
+    Task DeleteTableAsync(long id);
 }

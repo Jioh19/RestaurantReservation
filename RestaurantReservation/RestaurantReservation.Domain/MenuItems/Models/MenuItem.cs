@@ -1,12 +1,12 @@
 
 using RestaurantReservation.Domain.Restaurants.Models;
 
-namespace RestaurantReservation.Domain.Models.MenuItems;
+namespace RestaurantReservation.Domain.MenuItems.Models;
 
 public class MenuItem
 {
-    public int MenuItemId { get; set; }
-    public virtual Restaurant  Restaurant { get; set; }
+    public long Id { get; set; }
+    public long  RestaurantId { get; set; }
     public string Name { get; set; }
     
     public string? Description { get; set; }

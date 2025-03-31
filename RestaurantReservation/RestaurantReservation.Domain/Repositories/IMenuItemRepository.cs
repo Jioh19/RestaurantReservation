@@ -1,4 +1,4 @@
-using RestaurantReservation.Domain.Models.MenuItems;
+using RestaurantReservation.Domain.MenuItems.Models;
 
 namespace RestaurantReservation.Domain.Repositories;
 

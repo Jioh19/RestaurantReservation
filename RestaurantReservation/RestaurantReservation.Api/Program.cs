@@ -2,12 +2,14 @@ using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Domain.Repositories;
 using RestaurantReservation.Domain.Customers.Services;
 using RestaurantReservation.Domain.Employees.Services;
+using RestaurantReservation.Domain.Orders.Services;
 using RestaurantReservation.Domain.Reservations.Services;
 using RestaurantReservation.Domain.Restaurants.Services;
 using RestaurantReservation.Domain.Tables.Services;
 using RestaurantReservation.Infrastructure.Contexts;
 using RestaurantReservation.Infrastructure.Customers.Repositories;
 using RestaurantReservation.Infrastructure.Employees.Repositories;
+using RestaurantReservation.Infrastructure.Orders.Repositories;
 using RestaurantReservation.Infrastructure.Reservations.Repositories;
 using RestaurantReservation.Infrastructure.Restaurants.Repositories;
 using RestaurantReservation.Infrastructure.Tables.Repositories;
@@ -43,6 +45,9 @@ builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
 builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
+
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 
 var app = builder.Build();

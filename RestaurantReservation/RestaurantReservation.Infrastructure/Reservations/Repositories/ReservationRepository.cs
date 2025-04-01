@@ -18,7 +18,7 @@ public class ReservationRepository :  IReservationRepository
         _logger = logger;
     }
     
-    public async Task<IEnumerable<DomainReservation>> GetAllAsync()
+    public async Task<IReadOnlyCollection<DomainReservation>> GetAllAsync()
     {
         var reservations = await _context.Reservations.ToListAsync();
         _logger.LogInformation("Getting all Reservations" + " " + reservations.Count);

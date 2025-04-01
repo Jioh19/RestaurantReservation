@@ -16,7 +16,7 @@ public class ReservationService : IReservationService
     public async Task<Reservation> GetReservationByIdAsync(long id)
     {
         var reservation = await _reservationRepository.GetByIdAsync(id);
-        if (reservation == null)
+        if (reservation is null)
         {
             throw new EntityNotFoundException<Reservation>(id.ToString());
         }

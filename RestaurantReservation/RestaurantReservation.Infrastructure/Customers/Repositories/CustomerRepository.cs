@@ -18,7 +18,7 @@ public class CustomerRepository : ICustomerRepository
         _logger = logger;
     }
 
-    public async Task<IEnumerable<DomainCustomer>> GetAllAsync()
+    public async Task<IReadOnlyCollection<DomainCustomer>> GetAllAsync()
     {
         var customers = await _context.Customers.ToListAsync();
         _logger.LogInformation("Getting all customers" + " " + customers.Count);

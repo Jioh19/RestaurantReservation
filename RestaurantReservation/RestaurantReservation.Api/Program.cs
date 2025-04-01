@@ -26,7 +26,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<RestaurantReservationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
         x => x.MigrationsAssembly(typeof(RestaurantReservationDbContext).Assembly)
-        ).EnableSensitiveDataLogging()
+        )
     );
 builder.Services.AddControllers();
 builder.Services.AddLogging();

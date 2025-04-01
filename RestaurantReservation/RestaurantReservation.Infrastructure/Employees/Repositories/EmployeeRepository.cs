@@ -18,7 +18,7 @@ public class EmployeeRepository :  IEmployeeRepository
         _logger = logger;
     }
     
-    public async Task<IEnumerable<DomainEmployee>> GetAllAsync()
+    public async Task<IReadOnlyCollection<DomainEmployee>> GetAllAsync()
     {
         var employees = await _context.Employees.ToListAsync();
         _logger.LogInformation("Getting all Employees" + " " + employees.Count);

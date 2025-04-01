@@ -10,8 +10,4 @@
       <PackageReference Include="Riok.Mapperly" Version="4.2.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\RestaurantReservation.Domain\RestaurantReservation.Domain.csproj" />
-    </ItemGroup>
-
 </Project>

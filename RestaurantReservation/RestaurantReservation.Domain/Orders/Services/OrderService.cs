@@ -17,7 +17,7 @@ public class OrderService : IOrderService
     public async Task<Order> GetOrderByIdAsync(long id)
     {
         var order = await _orderRepository.GetByIdAsync(id);
-        if (order == null)
+        if (order is null)
         {
             throw new EntityNotFoundException<Order>(id.ToString());
         }

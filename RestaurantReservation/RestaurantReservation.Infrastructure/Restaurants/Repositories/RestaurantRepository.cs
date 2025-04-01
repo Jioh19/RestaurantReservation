@@ -19,7 +19,7 @@ public class RestaurantRepository :  IRestaurantRepository
         _logger = logger;
     }
 
-    public async Task<IEnumerable<DomainRestaurant>> GetAllAsync()
+    public async Task<IReadOnlyCollection<DomainRestaurant>> GetAllAsync()
     {
         var restaurants = await _context.Restaurants.ToListAsync();
         _logger.LogInformation("Getting all Restaurants" + " " + restaurants.Count);

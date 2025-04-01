@@ -1,5 +1,4 @@
-﻿using RestaurantReservation.Domain.Restaurants.Models;
-
+﻿
 namespace RestaurantReservation.Api.Contracts.Tables.Models;
 
 public class TableRequest

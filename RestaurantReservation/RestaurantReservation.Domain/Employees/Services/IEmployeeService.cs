@@ -1,6 +1,4 @@
-﻿
-
-using RestaurantReservation.Domain.Employees.Models;
+﻿using RestaurantReservation.Domain.Employees.Models;
 
 namespace RestaurantReservation.Domain.Employees.Services;
 

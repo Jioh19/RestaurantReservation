@@ -1,6 +1,4 @@
-using RestaurantReservation.Domain.Employees.Models;
 using RestaurantReservation.Domain.EntityReferences;
-using RestaurantReservation.Domain.Reservations.Models;
 
 namespace RestaurantReservation.Domain.Orders.Models;
 
@@ -13,6 +11,4 @@ public class Order
     public decimal TotalAmount { get; set; }
     
     public IReadOnlyList<OrderItemReference> OrderItems { get; set; } = Array.Empty<OrderItemReference>();
-
-    
 }

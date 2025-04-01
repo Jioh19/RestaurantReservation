@@ -20,7 +20,7 @@ public class MenuItemRepository : IMenuItemRepository
         _logger = logger;
     }
     
-    public async Task<IEnumerable<DomainMenuItem>> GetAllAsync()
+    public async Task<IReadOnlyCollection<DomainMenuItem>> GetAllAsync()
     {
         var menuItem = await _context.MenuItems.ToListAsync();
         _logger.LogInformation("Getting all MenuItems" + " " + menuItem.Count);

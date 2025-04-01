@@ -16,7 +16,7 @@ public class EmployeeService : IEmployeeService
     public async Task<Employee> GetEmployeeByIdAsync(long id)
     {
         var employee = await _employeeRepository.GetByIdAsync(id);
-        if (employee == null)
+        if (employee is null)
         {
             throw new EntityNotFoundException<Employee>(id.ToString());
         }

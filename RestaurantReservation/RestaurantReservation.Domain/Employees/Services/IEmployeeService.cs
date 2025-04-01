@@ -1,0 +1,12 @@
+﻿using RestaurantReservation.Domain.Employees.Models;
+
+namespace RestaurantReservation.Domain.Employees.Services;
+
+public interface IEmployeeService
+{
+    Task<Employee> GetEmployeeByIdAsync(long id);
+    Task<IReadOnlyCollection<Employee>> GetAllEmployeesAsync();
+    Task<Employee> AddEmployeeAsync(Employee domainEmployee);
+    Task UpdateEmployeeAsync(Employee domainEmployee);
+    Task DeleteEmployeeAsync(long id);
+}

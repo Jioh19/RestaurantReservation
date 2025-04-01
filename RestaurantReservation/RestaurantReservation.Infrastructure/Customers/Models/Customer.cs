@@ -19,7 +19,6 @@ internal class CustomerTypeConfiguration : IEntityTypeConfiguration<Customer>
         modelBuilder.ToTable("Customers", "dbo");
         modelBuilder.HasKey(c => c.Id);
         modelBuilder.HasIndex(c => c.Email).IsUnique();
-
         modelBuilder.Property(x => x.FirstName).HasMaxLength(50);
         modelBuilder.Property(x => x.LastName).HasMaxLength(50);
         modelBuilder.Property(x => x.Email).HasMaxLength(50);

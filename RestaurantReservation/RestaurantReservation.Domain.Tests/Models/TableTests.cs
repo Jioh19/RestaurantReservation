@@ -1,6 +1,6 @@
-using FluentAssertions;
-using RestaurantReservation.Domain.Models.Restaurants;
-using RestaurantReservation.Domain.Models.Tables;
+
+using RestaurantReservation.Domain.Tables.Models;
+using RestaurantReservation.Domain.Restaurants.Models;
 
 namespace RestaurantReservation.Domain.Tests.Models;
 
@@ -12,20 +12,20 @@ public class TableTests
         // Arrange
         var restaurant = new Restaurant
         {
-            RestaurantId = 1,
+            Id = 1,
             Name = "Test Restaurant"
         };
 
         var table = new Table
         {
-            TableId = 1,
-            Restaurant = restaurant,
+            Id = 1,
+            RestaurantId = restaurant.Id,
             Capacity = 4
         };
 
         // Assert
-        table.TableId.Should().Be(1);
-        table.Restaurant.Should().Be(restaurant);
+        table.Id.Should().Be(1);
+        table.RestaurantId.Should().Be(restaurant.Id);
         table.Capacity.Should().Be(4);
     }
 }

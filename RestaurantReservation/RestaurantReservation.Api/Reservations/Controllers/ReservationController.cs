@@ -134,4 +134,27 @@ public class ReservationController : ControllerBase
             return StatusCode(500, "An error occurred while deleting the reservation");
         }
     }
+    
+    [HttpPost("import")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> CreateBatchReservations([FromBody] IEnumerable<ReservationRequest> reservationRequests)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest("Invalid reservation data");
+        }
+        _logger.Log(LogLevel.Information, $"Creating many reservations");
+        try
+        {
+            await _reservationService.AddAllReservationAsync(reservationRequests.Select(e => e.ToDomain()).ToList());
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error creating reservations");
+            return BadRequest("Error creating reservations");
+        }
+    }
 }

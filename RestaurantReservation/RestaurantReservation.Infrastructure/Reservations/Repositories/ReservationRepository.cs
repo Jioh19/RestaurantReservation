@@ -63,4 +63,10 @@ public class ReservationRepository :  IReservationRepository
         _context.Reservations.Remove(reservation);
         await _context.SaveChangesAsync();
     }
+    
+    public async Task AddAllAsync(IEnumerable<DomainReservation> domainReservations)
+    {
+        await _context.Reservations.AddRangeAsync(domainReservations.Select(t => t.ToEntity()).ToList());
+        await _context.SaveChangesAsync();
+    }
 }

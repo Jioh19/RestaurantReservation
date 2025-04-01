@@ -96,7 +96,7 @@ public class CustomerController : ControllerBase
             await _customerService.UpdateCustomerAsync(customerRequest.ToDomain());
             return NoContent();
         }
-        catch (KeyNotFoundException)
+        catch (EntityNotFoundException<DomainCustomer>)
         {
             return NotFound($"Customer with ID {id} not found");
         }

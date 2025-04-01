@@ -124,7 +124,7 @@ public class OrderController : ControllerBase
             await _orderService.DeleteOrderAsync(id);
             return NoContent();
         }
-        catch (KeyNotFoundException)
+        catch (EntityNotFoundException<DomainOrder>)
         {
             return NotFound($"Order with ID {id} not found");
         }

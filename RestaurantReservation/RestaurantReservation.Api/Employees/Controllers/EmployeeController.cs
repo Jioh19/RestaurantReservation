@@ -125,7 +125,7 @@ public class EmployeeController : ControllerBase
             await _employeeService.DeleteEmployeeAsync(id);
             return NoContent();
         }
-        catch (KeyNotFoundException)
+        catch (EntityNotFoundException<DomainEmployee>)
         {
             return NotFound($"Employee with ID {id} not found");
         }

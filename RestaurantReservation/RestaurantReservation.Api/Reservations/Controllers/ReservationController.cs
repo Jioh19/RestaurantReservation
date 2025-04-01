@@ -124,7 +124,7 @@ public class ReservationController : ControllerBase
             await _reservationService.DeleteReservationAsync(id);
             return NoContent();
         }
-        catch (KeyNotFoundException)
+        catch (EntityNotFoundException<DomainReservation>)
         {
             return NotFound($"Reservation with ID {id} not found");
         }

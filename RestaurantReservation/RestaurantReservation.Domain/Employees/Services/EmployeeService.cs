@@ -45,4 +45,15 @@ public class EmployeeService : IEmployeeService
     {
         await _employeeRepository.DeleteAsync(id);
     }
+
+    public async Task AddAllEmployeeAsync(IEnumerable<Employee> domainEmployees)
+    {
+        await _employeeRepository.AddAllAsync(domainEmployees);
+    }
+
+    public async Task<IReadOnlyCollection<Employee>> GetManagersAsync()
+    {
+        var employees = await _employeeRepository.GetManagersAsync();
+        return employees.ToList();
+    }
 }

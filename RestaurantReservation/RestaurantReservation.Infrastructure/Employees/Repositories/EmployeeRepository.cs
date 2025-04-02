@@ -85,4 +85,10 @@ public class EmployeeRepository :  IEmployeeRepository
         _logger.LogInformation("Getting all Managers" + " " + employees.Count);
         return employees.Select(t => t.ToDomain()).ToList();
     }
+
+    public async Task<decimal> GetAverageOrderByEmployeeIdAsync(long id)
+    {
+        var average = await _context.Orders.Where(o => o.EmployeeId == id).AverageAsync(o => o.TotalAmount);
+        return average;
+    }
 }

@@ -56,4 +56,10 @@ public class EmployeeService : IEmployeeService
         var employees = await _employeeRepository.GetManagersAsync();
         return employees.ToList();
     }
+
+    public async Task<decimal> GetAverageOrderByEmployeeIdAsync(long id)
+    {
+        var average = await _employeeRepository.GetAverageOrderByEmployeeIdAsync(id);
+        return average;
+    }
 }

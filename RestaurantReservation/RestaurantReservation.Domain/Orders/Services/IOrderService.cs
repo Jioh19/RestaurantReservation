@@ -9,4 +9,6 @@ public interface IOrderService
     Task<Order> AddOrderAsync(Order domainOrder);
     Task UpdateOrderAsync(Order domainOrder);
     Task DeleteOrderAsync(long id);
+    Task AddAllOrderAsync(IEnumerable<Order> domainOrders);
+    Task<IReadOnlyCollection<Order?>> GetOrdersByReservationIdAsync(long reservationId);
 }

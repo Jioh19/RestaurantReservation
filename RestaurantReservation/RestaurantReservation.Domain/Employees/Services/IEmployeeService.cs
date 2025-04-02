@@ -11,4 +11,5 @@ public interface IEmployeeService
     Task DeleteEmployeeAsync(long id);
     Task AddAllEmployeeAsync(IEnumerable<Employee> domainEmployees);
     Task<IReadOnlyCollection<Employee>> GetManagersAsync();
+    Task<decimal> GetAverageOrderByEmployeeIdAsync(long id);
 }

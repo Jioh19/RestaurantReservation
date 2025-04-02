@@ -45,4 +45,15 @@ public class ReservationService : IReservationService
     {
         await _reservationRepository.DeleteAsync(id);
     }
+    
+    public async Task AddAllReservationAsync(IEnumerable<Reservation> domainReservations)
+    {
+        await _reservationRepository.AddAllAsync(domainReservations);
+    }
+
+    public async Task<IReadOnlyCollection<Reservation?>> GetReservationsByCustomerIdAsync(long customerId)
+    {
+        var reservations = await _reservationRepository.GetReservationsByCustomerIdAsync(customerId);
+        return reservations.ToList();
+    }
 }

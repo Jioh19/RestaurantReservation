@@ -134,4 +134,27 @@ public class OrderController : ControllerBase
             return StatusCode(500, "An error occurred while deleting the order");
         }
     }
+    
+    [HttpPost("import")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> CreateBatchOrders([FromBody] IEnumerable<OrderRequest> orderRequests)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest("Invalid order data");
+        }
+        _logger.Log(LogLevel.Information, $"Creating many orders");
+        try
+        {
+            await _orderService.AddAllOrderAsync(orderRequests.Select(e => e.ToDomain()).ToList());
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error creating orders");
+            return BadRequest("Error creating orders");
+        }
+    }
 }

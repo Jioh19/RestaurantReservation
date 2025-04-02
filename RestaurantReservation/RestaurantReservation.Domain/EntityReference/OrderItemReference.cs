@@ -5,7 +5,7 @@ public class OrderItemReference : EntityReference
     public int Quantity { get; set; }
     public long ItemId { get; set; }
 
-    private OrderItemReference(int quantity, long itemId)
+    public OrderItemReference(int quantity, long itemId)
     {
         Quantity = quantity;
         ItemId = itemId;

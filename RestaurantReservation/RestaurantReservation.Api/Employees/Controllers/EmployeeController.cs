@@ -135,4 +135,61 @@ public class EmployeeController : ControllerBase
             return StatusCode(500, "An error occurred while deleting the employee");
         }
     }
+    
+    [HttpPost("import")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> CreateBatchEmployees([FromBody] IEnumerable<EmployeeRequest> employeeRequests)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest("Invalid employee data");
+        }
+        _logger.Log(LogLevel.Information, $"Creating many employees");
+        try
+        {
+            await _employeeService.AddAllEmployeeAsync(employeeRequests.Select(e => e.ToDomain()).ToList());
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error creating employees");
+            return BadRequest("Error creating employees");
+        }
+    }
+    
+    [HttpGet("managers")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<IEnumerable<EmployeeResponse>>> GetManagers()
+    {
+        try
+        {
+            var employees = await _employeeService.GetManagersAsync();
+            return Ok(employees.Select(EmployeeMapperDto.ToResponse).ToList());
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving managers");
+            return StatusCode(500, "An error occurred while retrieving managers");
+        }
+    }
+    
+    [HttpGet("{id}/average-order-amount")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<IEnumerable<EmployeeResponse>>> GetAverageOrderByEmployeeId(long id)
+    {
+        try
+        {
+            var average = await _employeeService.GetAverageOrderByEmployeeIdAsync(id);
+            return Ok(average);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error calculating average");
+            return StatusCode(500, "An error occurred while calculating average");
+        }
+    }
 }

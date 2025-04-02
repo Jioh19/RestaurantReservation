@@ -63,4 +63,17 @@ public class ReservationRepository :  IReservationRepository
         _context.Reservations.Remove(reservation);
         await _context.SaveChangesAsync();
     }
+    
+    public async Task AddAllAsync(IEnumerable<DomainReservation> domainReservations)
+    {
+        await _context.Reservations.AddRangeAsync(domainReservations.Select(t => t.ToEntity()).ToList());
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task<IReadOnlyCollection<DomainReservation?>> GetReservationsByCustomerIdAsync(long customerId)
+    {
+        var reservations = await _context.Reservations.Where(t => t.CustomerId == customerId).ToListAsync();
+        _logger.LogInformation($"Getting all Reservations by Customer Id {customerId}");
+        return reservations.Select(t => t.ToDomain()).ToList();
+    }
 }

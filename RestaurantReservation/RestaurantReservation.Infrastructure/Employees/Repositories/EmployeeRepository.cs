@@ -72,4 +72,23 @@ public class EmployeeRepository :  IEmployeeRepository
         _context.Employees.Remove(employee);
         await _context.SaveChangesAsync();
     }
+    
+    public async Task AddAllAsync(IEnumerable<DomainEmployee> domainEmployees)
+    {
+        await _context.Employees.AddRangeAsync(domainEmployees.Select(t => t.ToEntity()).ToList());
+        await _context.SaveChangesAsync();
+    }
+    
+    public async Task<IReadOnlyCollection<DomainEmployee>> GetManagersAsync()
+    {
+        var employees = await _context.Employees.Where(t => t.Position.Equals("Manager")).ToListAsync();
+        _logger.LogInformation("Getting all Managers" + " " + employees.Count);
+        return employees.Select(t => t.ToDomain()).ToList();
+    }
+
+    public async Task<decimal> GetAverageOrderByEmployeeIdAsync(long id)
+    {
+        var average = await _context.Orders.Where(o => o.EmployeeId == id).AverageAsync(o => o.TotalAmount);
+        return average;
+    }
 }

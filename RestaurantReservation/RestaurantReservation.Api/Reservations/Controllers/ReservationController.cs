@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RestaurantReservation.Api.Contracts.Orders.Models;
 using RestaurantReservation.Api.Contracts.Reservations;
+using RestaurantReservation.Api.Orders.Mappers;
 using RestaurantReservation.Api.Reservations.Mappers;
 using RestaurantReservation.Domain.Errors;
+using RestaurantReservation.Domain.Orders.Services;
 using RestaurantReservation.Domain.Reservations.Services;
 using RestaurantReservation.Domain.Restaurants.Services;
 using DomainReservation = RestaurantReservation.Domain.Reservations.Models.Reservation;
@@ -13,13 +16,13 @@ namespace RestaurantReservation.Api.Reservations.Controllers;
 public class ReservationController : ControllerBase
 {
     private readonly IReservationService _reservationService;
-    private readonly IRestaurantService _restaurantService;
+    private readonly IOrderService _orderService;
     private readonly ILogger<ReservationController> _logger;
 
-    public ReservationController(IReservationService reservationService, IRestaurantService restaurantService, ILogger<ReservationController> logger)
+    public ReservationController(IReservationService reservationService, IOrderService orderService, ILogger<ReservationController> logger)
     {
         _reservationService = reservationService;
-        _restaurantService = restaurantService;
+        _orderService = orderService;
         _logger = logger;
     }
 
@@ -132,6 +135,64 @@ public class ReservationController : ControllerBase
         {
             _logger.LogError(ex, $"Error deleting reservation with ID {id}");
             return StatusCode(500, "An error occurred while deleting the reservation");
+        }
+    }
+    
+    [HttpPost("import")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> CreateBatchReservations([FromBody] IEnumerable<ReservationRequest> reservationRequests)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest("Invalid reservation data");
+        }
+        _logger.Log(LogLevel.Information, $"Creating many reservations");
+        try
+        {
+            await _reservationService.AddAllReservationAsync(reservationRequests.Select(e => e.ToDomain()).ToList());
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error creating reservations");
+            return BadRequest("Error creating reservations");
+        }
+    }
+    
+    [HttpGet("customer/{id:long}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<IEnumerable<ReservationResponse>>> GetReservationsByCustomerId(long id)
+    {
+        try
+        {
+            var reservations = await _reservationService.GetReservationsByCustomerIdAsync(id);
+            return Ok(reservations.Select(ReservationMapperDto.ToResponse).ToList());
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving reservations");
+            return StatusCode(500, "An error occurred while retrieving reservations");
+        }
+    }
+    
+    [HttpGet("{id:long}/orders")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<IEnumerable<OrderResponse>>> GetOrdersByReservationId(long id)
+    {
+        try
+        {
+            var orders = await _orderService.GetOrdersByReservationIdAsync(id);
+            return Ok(orders.Select(OrderMapperDto.ToResponse).ToList());
+
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving reservations");
+            return StatusCode(500, "An error occurred while retrieving reservations");
         }
     }
 }

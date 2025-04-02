@@ -46,4 +46,15 @@ public class OrderService : IOrderService
     {
         await _orderRepository.DeleteAsync(id);
     }
+    
+    public async Task AddAllOrderAsync(IEnumerable<Order> domainOrders)
+    {
+        await _orderRepository.AddAllAsync(domainOrders);
+    }
+    
+    public async Task<IReadOnlyCollection<Order?>> GetOrdersByReservationIdAsync(long reservationId)
+    {
+        var orders = await _orderRepository.GetOrdersByReservationIdAsync(reservationId);
+        return orders.ToList();
+    }
 }

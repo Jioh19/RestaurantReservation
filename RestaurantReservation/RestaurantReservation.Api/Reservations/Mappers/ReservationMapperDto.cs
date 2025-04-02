@@ -7,7 +7,7 @@ namespace RestaurantReservation.Api.Reservations.Mappers;
 [Mapper]
 public static partial class ReservationMapperDto
 {
-    public static partial ReservationResponse ToResponse(this DomainReservation source);
+    public static partial ReservationResponse ToResponse(this DomainReservation? source);
     
     public static partial DomainReservation ToDomain(this ReservationRequest source);
 }

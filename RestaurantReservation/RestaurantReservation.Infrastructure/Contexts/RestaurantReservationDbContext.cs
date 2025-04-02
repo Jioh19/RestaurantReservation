@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using RestaurantReservation.Domain.EntityReferences;
 using RestaurantReservation.Infrastructure.Customers.Models;
 using RestaurantReservation.Infrastructure.Restaurants.Models;
 using RestaurantReservation.Infrastructure.Tables.Models;
@@ -22,6 +23,7 @@ public class RestaurantReservationDbContext : DbContext
     public DbSet<Reservation> Reservations { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<MenuItem> MenuItems { get; set; }
+    public DbSet<OrderItemReference> OrderItemReferences { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(Customer).Assembly);

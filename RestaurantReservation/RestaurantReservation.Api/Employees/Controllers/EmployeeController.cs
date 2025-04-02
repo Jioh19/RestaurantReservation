@@ -175,4 +175,21 @@ public class EmployeeController : ControllerBase
             return StatusCode(500, "An error occurred while retrieving managers");
         }
     }
+    
+    [HttpGet("{id}/average-order-amount")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<IEnumerable<EmployeeResponse>>> GetAverageOrderByEmployeeId(long id)
+    {
+        try
+        {
+            var average = await _employeeService.GetAverageOrderByEmployeeIdAsync(id);
+            return Ok(average);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error calculating average");
+            return StatusCode(500, "An error occurred while calculating average");
+        }
+    }
 }

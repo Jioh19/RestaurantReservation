@@ -63,4 +63,17 @@ public class OrderRepository : IOrderRepository
         _context.Orders.Remove(table);
         await _context.SaveChangesAsync();
     }
+    
+    public async Task AddAllAsync(IEnumerable<DomainOrder> domainOrders)
+    {
+        await _context.Orders.AddRangeAsync(domainOrders.Select(t => t.ToEntity()).ToList());
+        await _context.SaveChangesAsync();
+    }
+    
+    public async Task<IReadOnlyCollection<DomainOrder?>> GetOrdersByReservationIdAsync(long reservationId)
+    {
+        var orders = await _context.Orders.Where(t => t.ReservationId == reservationId).ToListAsync();
+        _logger.LogInformation($"Getting all Orders by Reservation Id {reservationId}");
+        return orders.Select(t => t.ToDomain()).ToList();
+    }
 }

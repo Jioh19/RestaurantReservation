@@ -157,4 +157,21 @@ public class ReservationController : ControllerBase
             return BadRequest("Error creating reservations");
         }
     }
+    
+    [HttpGet("customer/{id:long}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<IEnumerable<ReservationResponse>>> GetReservationsByCustomerId(long id)
+    {
+        try
+        {
+            var reservations = await _reservationService.GetReservationsByCustomerIdAsync(id);
+            return Ok(reservations.Select(ReservationMapperDto.ToResponse).ToList());
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving reservations");
+            return StatusCode(500, "An error occurred while retrieving reservations");
+        }
+    }
 }

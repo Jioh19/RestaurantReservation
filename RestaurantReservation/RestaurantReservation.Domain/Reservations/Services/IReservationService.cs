@@ -10,4 +10,5 @@ public interface IReservationService
     Task UpdateReservationAsync(Reservation domainReservation);
     Task DeleteReservationAsync(long id);
     Task AddAllReservationAsync(IEnumerable<Reservation> domainReservations);
+    Task<IReadOnlyCollection<Reservation?>> GetReservationsByCustomerIdAsync(long customerId);
 }

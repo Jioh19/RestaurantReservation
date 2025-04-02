@@ -16,7 +16,7 @@ public class MenuItemService : IMenuItemService
     public async Task<MenuItem> GetMenuItemByIdAsync(long id)
     {
         var menuItem = await _menuItemRepository.GetByIdAsync(id);
-        if (menuItem == null)
+        if (menuItem is null)
         {
             throw new EntityNotFoundException<MenuItem>(id.ToString());
         }

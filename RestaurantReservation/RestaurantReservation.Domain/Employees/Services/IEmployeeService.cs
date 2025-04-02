@@ -1,6 +1,4 @@
-﻿
-
-using RestaurantReservation.Domain.Employees.Models;
+﻿using RestaurantReservation.Domain.Employees.Models;
 
 namespace RestaurantReservation.Domain.Employees.Services;
 
@@ -11,4 +9,6 @@ public interface IEmployeeService
     Task<Employee> AddEmployeeAsync(Employee domainEmployee);
     Task UpdateEmployeeAsync(Employee domainEmployee);
     Task DeleteEmployeeAsync(long id);
+    Task AddAllEmployeeAsync(IEnumerable<Employee> domainEmployees);
+    Task<IReadOnlyCollection<Employee>> GetManagersAsync();
 }

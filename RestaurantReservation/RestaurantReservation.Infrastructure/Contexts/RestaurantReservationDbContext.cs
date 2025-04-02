@@ -25,12 +25,6 @@ public class RestaurantReservationDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(Customer).Assembly);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(Restaurant).Assembly);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(Table).Assembly);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(Employee).Assembly);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(Reservation).Assembly);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(Order).Assembly);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(MenuItem).Assembly);
         base.OnModelCreating(modelBuilder);
     }
     

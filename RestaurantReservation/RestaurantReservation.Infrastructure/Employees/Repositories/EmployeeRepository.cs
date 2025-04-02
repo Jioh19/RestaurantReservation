@@ -18,7 +18,7 @@ public class EmployeeRepository :  IEmployeeRepository
         _logger = logger;
     }
     
-    public async Task<IEnumerable<DomainEmployee>> GetAllAsync()
+    public async Task<IReadOnlyCollection<DomainEmployee>> GetAllAsync()
     {
         var employees = await _context.Employees.ToListAsync();
         _logger.LogInformation("Getting all Employees" + " " + employees.Count);
@@ -71,5 +71,18 @@ public class EmployeeRepository :  IEmployeeRepository
         }
         _context.Employees.Remove(employee);
         await _context.SaveChangesAsync();
+    }
+    
+    public async Task AddAllAsync(IEnumerable<DomainEmployee> domainEmployees)
+    {
+        await _context.Employees.AddRangeAsync(domainEmployees.Select(t => t.ToEntity()).ToList());
+        await _context.SaveChangesAsync();
+    }
+    
+    public async Task<IReadOnlyCollection<DomainEmployee>> GetManagersAsync()
+    {
+        var employees = await _context.Employees.Where(t => t.Position.Equals("Manager")).ToListAsync();
+        _logger.LogInformation("Getting all Managers" + " " + employees.Count);
+        return employees.Select(t => t.ToDomain()).ToList();
     }
 }

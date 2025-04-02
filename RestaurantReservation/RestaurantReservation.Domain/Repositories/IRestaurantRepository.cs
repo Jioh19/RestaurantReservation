@@ -1,5 +1,3 @@
-
-
 using RestaurantReservation.Domain.Restaurants.Models;
 
 namespace RestaurantReservation.Domain.Repositories;

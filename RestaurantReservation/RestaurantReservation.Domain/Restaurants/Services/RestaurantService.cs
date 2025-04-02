@@ -16,7 +16,7 @@ public class RestaurantService : IRestaurantService
     public async Task<Restaurant> GetRestaurantByIdAsync(long id)
     {
         var restaurant = await _restaurantRepository.GetByIdAsync(id);
-        if (restaurant == null)
+        if (restaurant is null)
         {
             throw new EntityNotFoundException<Restaurant>(id.ToString());
         }

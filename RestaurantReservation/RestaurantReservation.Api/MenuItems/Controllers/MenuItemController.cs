@@ -124,7 +124,7 @@ public class MenuItemController : ControllerBase
             await _menuItemService.DeleteMenuItemAsync(id);
             return NoContent();
         }
-        catch (KeyNotFoundException)
+        catch (EntityNotFoundException<DomainMenuItem>)
         {
             return NotFound($"MenuItem with ID {id} not found");
         }

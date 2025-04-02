@@ -123,7 +123,7 @@ public class TableController : ControllerBase
             await _tableService.DeleteTableAsync(id);
             return NoContent();
         }
-        catch (KeyNotFoundException)
+        catch (EntityNotFoundException<DomainTable>)
         {
             return NotFound($"Table with ID {id} not found");
         }

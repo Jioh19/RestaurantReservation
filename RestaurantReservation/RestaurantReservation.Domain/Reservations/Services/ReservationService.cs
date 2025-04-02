@@ -16,7 +16,7 @@ public class ReservationService : IReservationService
     public async Task<Reservation> GetReservationByIdAsync(long id)
     {
         var reservation = await _reservationRepository.GetByIdAsync(id);
-        if (reservation == null)
+        if (reservation is null)
         {
             throw new EntityNotFoundException<Reservation>(id.ToString());
         }
@@ -44,5 +44,16 @@ public class ReservationService : IReservationService
     public async Task DeleteReservationAsync(long id)
     {
         await _reservationRepository.DeleteAsync(id);
+    }
+    
+    public async Task AddAllReservationAsync(IEnumerable<Reservation> domainReservations)
+    {
+        await _reservationRepository.AddAllAsync(domainReservations);
+    }
+
+    public async Task<IReadOnlyCollection<Reservation?>> GetReservationsByCustomerIdAsync(long customerId)
+    {
+        var reservations = await _reservationRepository.GetReservationsByCustomerIdAsync(customerId);
+        return reservations.ToList();
     }
 }

@@ -19,7 +19,7 @@ public class TableRepository : ITableRepository
         _logger = logger;
     }
     
-    public async Task<IEnumerable<DomainTable>> GetAllAsync()
+    public async Task<IReadOnlyCollection<DomainTable>> GetAllAsync()
     {
         var tables = await _context.Tables.ToListAsync();
         _logger.LogInformation("Getting all Tables" + " " + tables.Count);

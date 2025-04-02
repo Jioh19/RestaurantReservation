@@ -118,7 +118,7 @@ public class RestauranController : ControllerBase
             await _restaurantService.DeleteRestaurantAsync(id);
             return NoContent();
         }
-        catch (KeyNotFoundException)
+        catch (EntityNotFoundException<DomainRestaurant>)
         {
             return NotFound($"Restaurant with ID {id} not found");
         }

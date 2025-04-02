@@ -19,7 +19,7 @@ public class OrderRepository : IOrderRepository
         _logger = logger;
     }
     
-    public async Task<IEnumerable<DomainOrder>> GetAllAsync()
+    public async Task<IReadOnlyCollection<DomainOrder>> GetAllAsync()
     {
         var order = await _context.Orders.ToListAsync();
         _logger.LogInformation("Getting all Orders" + " " + order.Count);

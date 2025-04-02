@@ -16,7 +16,7 @@ public class EmployeeService : IEmployeeService
     public async Task<Employee> GetEmployeeByIdAsync(long id)
     {
         var employee = await _employeeRepository.GetByIdAsync(id);
-        if (employee == null)
+        if (employee is null)
         {
             throw new EntityNotFoundException<Employee>(id.ToString());
         }
@@ -44,5 +44,16 @@ public class EmployeeService : IEmployeeService
     public async Task DeleteEmployeeAsync(long id)
     {
         await _employeeRepository.DeleteAsync(id);
+    }
+
+    public async Task AddAllEmployeeAsync(IEnumerable<Employee> domainEmployees)
+    {
+        await _employeeRepository.AddAllAsync(domainEmployees);
+    }
+
+    public async Task<IReadOnlyCollection<Employee>> GetManagersAsync()
+    {
+        var employees = await _employeeRepository.GetManagersAsync();
+        return employees.ToList();
     }
 }

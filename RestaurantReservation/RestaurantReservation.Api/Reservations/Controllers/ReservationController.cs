@@ -124,7 +124,7 @@ public class ReservationController : ControllerBase
             await _reservationService.DeleteReservationAsync(id);
             return NoContent();
         }
-        catch (KeyNotFoundException)
+        catch (EntityNotFoundException<DomainReservation>)
         {
             return NotFound($"Reservation with ID {id} not found");
         }
@@ -132,6 +132,46 @@ public class ReservationController : ControllerBase
         {
             _logger.LogError(ex, $"Error deleting reservation with ID {id}");
             return StatusCode(500, "An error occurred while deleting the reservation");
+        }
+    }
+    
+    [HttpPost("import")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> CreateBatchReservations([FromBody] IEnumerable<ReservationRequest> reservationRequests)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest("Invalid reservation data");
+        }
+        _logger.Log(LogLevel.Information, $"Creating many reservations");
+        try
+        {
+            await _reservationService.AddAllReservationAsync(reservationRequests.Select(e => e.ToDomain()).ToList());
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error creating reservations");
+            return BadRequest("Error creating reservations");
+        }
+    }
+    
+    [HttpGet("customer/{id:long}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<IEnumerable<ReservationResponse>>> GetReservationsByCustomerId(long id)
+    {
+        try
+        {
+            var reservations = await _reservationService.GetReservationsByCustomerIdAsync(id);
+            return Ok(reservations.Select(ReservationMapperDto.ToResponse).ToList());
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving reservations");
+            return StatusCode(500, "An error occurred while retrieving reservations");
         }
     }
 }

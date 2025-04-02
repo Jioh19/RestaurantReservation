@@ -17,7 +17,7 @@ public class TableService : ITableService
     public async Task<Table> GetTableByIdAsync(long id)
     {
         var table = await _tableRepository.GetByIdAsync(id);
-        if (table == null)
+        if (table is null)
         {
             throw new EntityNotFoundException<Table>(id.ToString());
         }

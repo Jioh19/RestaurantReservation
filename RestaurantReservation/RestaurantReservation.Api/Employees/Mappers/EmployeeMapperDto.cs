@@ -10,4 +10,5 @@ public static partial class EmployeeMapperDto
     public static partial EmployeeResponse ToResponse(this DomainEmployee source);
     
     public static partial DomainEmployee ToDomain(this EmployeeRequest source);
+    
 }

@@ -1,4 +1,5 @@
-﻿using RestaurantReservation.Domain.Orders.Models;
+﻿using RestaurantReservation.Domain.EntityReferences;
+using RestaurantReservation.Domain.Orders.Models;
 
 namespace RestaurantReservation.Domain.Orders.Services;
 
@@ -10,5 +11,6 @@ public interface IOrderService
     Task UpdateOrderAsync(Order domainOrder);
     Task DeleteOrderAsync(long id);
     Task AddAllOrderAsync(IEnumerable<Order> domainOrders);
-    Task<IReadOnlyCollection<Order?>> GetOrdersByReservationIdAsync(long reservationId);
+    Task<IReadOnlyCollection<Order>> GetOrdersByReservationIdAsync(long reservationId);
+    Task<IReadOnlyCollection<OrderItemReference>> GetOrderItemsByOrderIdAsync(long orderId);
 }

@@ -9,7 +9,7 @@ namespace RestaurantReservation.Infrastructure.Tables.Models;
 public class Table
 {
     public long Id { get; set; }
-    public Restaurant Restaurant { get; set; }
+    public Restaurant Restaurant { get; set; } = null!;
     public long RestaurantId { get; set; }
     public int Capacity { get; set; }
     

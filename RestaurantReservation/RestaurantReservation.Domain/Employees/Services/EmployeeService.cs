@@ -57,7 +57,7 @@ public class EmployeeService : IEmployeeService
         return employees.ToList();
     }
 
-    public async Task<decimal> GetAverageOrderByEmployeeIdAsync(long id)
+    public async ValueTask<decimal> GetAverageOrderByEmployeeIdAsync(long id)
     {
         var average = await _employeeRepository.GetAverageOrderByEmployeeIdAsync(id);
         return average;
@@ -65,25 +65,8 @@ public class EmployeeService : IEmployeeService
     
     public async Task<Employee?> ValidateCredentials(long id, string lastName)
     {
-        try
-        {
-            var employee = await _employeeRepository.GetByIdAsync(id);
-            if (employee == null)
-            {
-                return null;
-            }
-            bool isValidLastName = employee.LastName.Equals(lastName);
-            
-            if (!isValidLastName)
-            {
-                return null;
-            }
-
-            return employee;
-        }
-        catch (Exception ex)
-        {
-            throw;
-        }
+        var employee = await _employeeRepository.GetByIdAsync(id);
+        var isValidLastName = employee?.LastName.Equals(lastName) ?? false;
+        return isValidLastName ? employee : null;
     }
 }

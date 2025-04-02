@@ -3,7 +3,6 @@ using RestaurantReservation.Api.Contracts.Employees.Models;
 using RestaurantReservation.Api.Employees.Mappers;
 using RestaurantReservation.Domain.Employees.Services;
 using RestaurantReservation.Domain.Errors;
-using RestaurantReservation.Domain.Restaurants.Services;
 using DomainEmployee = RestaurantReservation.Domain.Employees.Models.Employee;
 
 namespace RestaurantReservation.Api.Employees.Controllers;
@@ -14,13 +13,11 @@ namespace RestaurantReservation.Api.Employees.Controllers;
 public class EmployeeController : ControllerBase
 {
     private readonly IEmployeeService _employeeService;
-    private readonly IRestaurantService _restaurantService;
     private readonly ILogger<EmployeeController> _logger;
 
-    public EmployeeController(IEmployeeService employeeService, IRestaurantService restaurantService, ILogger<EmployeeController> logger)
+    public EmployeeController(IEmployeeService employeeService, ILogger<EmployeeController> logger)
     {
         _employeeService = employeeService;
-        _restaurantService = restaurantService;
         _logger = logger;
     }
 

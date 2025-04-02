@@ -28,7 +28,6 @@ public class JwtGenerator : IJwtGenerator
         var claims = new[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, employee.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, employee.FirstName),
             new Claim(ClaimTypes.Role, employee.Position),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
         };

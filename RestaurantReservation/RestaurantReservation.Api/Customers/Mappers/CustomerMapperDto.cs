@@ -9,6 +9,5 @@ public static partial class CustomerMapperDto
 {
     public static partial CustomerResponse ToResponse(this DomainCustomer source);
     
-    
     public static partial DomainCustomer ToDomain(this CustomerRequest source);
 }

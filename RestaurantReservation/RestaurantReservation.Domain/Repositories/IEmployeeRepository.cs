@@ -6,5 +6,5 @@ public interface IEmployeeRepository: IRepository<Employee>
 {
     Task AddAllAsync(IEnumerable<Employee> domainEmployees);
     Task<IReadOnlyCollection<Employee>> GetManagersAsync();
-    Task<decimal> GetAverageOrderByEmployeeIdAsync(long id);
+    ValueTask<decimal> GetAverageOrderByEmployeeIdAsync(long id);
 }

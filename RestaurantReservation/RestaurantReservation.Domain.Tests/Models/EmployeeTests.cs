@@ -1,5 +1,6 @@
-using FluentAssertions;
+using FluentAssertions.Execution;
 using RestaurantReservation.Domain.Employees.Models;
+using RestaurantReservation.Domain.EntityReferences;
 using RestaurantReservation.Domain.Restaurants.Models;
 
 namespace RestaurantReservation.Domain.Tests.Models
@@ -22,15 +23,18 @@ namespace RestaurantReservation.Domain.Tests.Models
                 FirstName = "John",
                 LastName = "Doe",
                 Position = "Waiter",
-                RestaurantId = restaurant.Id,
+                Restaurant = new EntityReference<long>(){ Id = restaurant.Id, Name = restaurant.Name },
             };
 
             // Assert
-            employee.Id.Should().Be(1);
-            employee.FirstName.Should().Be("John");
-            employee.LastName.Should().Be("Doe");
-            employee.Position.Should().Be("Waiter");
-            employee.RestaurantId.Should().Be(restaurant.Id);
+            using (new AssertionScope())
+            {
+                employee.Id.Should().Be(1);
+                employee.FirstName.Should().Be("John");
+                employee.LastName.Should().Be("Doe");
+                employee.Position.Should().Be("Waiter");
+                employee.Restaurant.Id.Should().Be(restaurant.Id);
+            }
         }
     }
 }

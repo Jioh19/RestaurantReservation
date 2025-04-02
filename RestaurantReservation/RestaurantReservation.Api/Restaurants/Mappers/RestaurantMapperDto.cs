@@ -2,7 +2,7 @@
 using DomainRestaurant = RestaurantReservation.Domain.Restaurants.Models.Restaurant;
 using Riok.Mapperly.Abstractions;
 
-namespace RestaurantReservation.Api.Restaurant.Mappers;
+namespace RestaurantReservation.Api.Restaurants.Mappers;
 
 [Mapper]
 public static partial class RestaurantMapperDto

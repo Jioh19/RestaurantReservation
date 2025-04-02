@@ -1,4 +1,4 @@
-﻿namespace RestaurantReservation.Api.Contracts.MenuItem;
+﻿namespace RestaurantReservation.Api.Contracts.MenuItems;
 
 public record MenuItemRequest(
     long Id,

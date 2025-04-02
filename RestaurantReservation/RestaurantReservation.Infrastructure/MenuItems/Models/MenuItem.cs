@@ -8,8 +8,8 @@ public class MenuItem
 {
     public long Id { get; set; }
     public long RestaurantId { get; set; }
-    public Restaurant  Restaurant { get; set; }
-    public string Name { get; set; }
+    public Restaurant Restaurant { get; set; } = null!;
+    public string Name { get; set; } = string.Empty;
     
     public string? Description { get; set; }
     public decimal Price { get; set; }

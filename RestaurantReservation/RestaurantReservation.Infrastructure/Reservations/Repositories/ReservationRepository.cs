@@ -70,7 +70,7 @@ public class ReservationRepository :  IReservationRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task<IReadOnlyCollection<DomainReservation?>> GetReservationsByCustomerIdAsync(long customerId)
+    public async Task<IReadOnlyCollection<DomainReservation>> GetReservationsByCustomerIdAsync(long customerId)
     {
         var reservations = await _context.Reservations.Where(t => t.CustomerId == customerId).ToListAsync();
         _logger.LogInformation($"Getting all Reservations by Customer Id {customerId}");

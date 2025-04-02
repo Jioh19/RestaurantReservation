@@ -25,7 +25,6 @@ public class AuthController :ControllerBase
         var user = await _userService.ValidateCredentials(
             request.Id, request.LastName);
 
-
         if (user is null)
         {
             return Unauthorized();

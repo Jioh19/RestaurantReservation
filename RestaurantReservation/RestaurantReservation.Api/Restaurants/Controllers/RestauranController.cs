@@ -1,26 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestaurantReservation.Api.Contracts.Restaurants.Models;
-using RestaurantReservation.Api.Restaurant.Mappers;
+using RestaurantReservation.Api.Restaurants.Mappers;
 using RestaurantReservation.Domain.Errors;
 using RestaurantReservation.Domain.Restaurants.Services;
 using DomainRestaurant = RestaurantReservation.Domain.Restaurants.Models.Restaurant;
 
-namespace RestaurantReservation.Api.Restaurant.Controllers;
+namespace RestaurantReservation.Api.Restaurants.Controllers;
 
 [ApiController]
 [Route("api/restaurant")]
-public class RestauranController : ControllerBase
+public class RestaurantController : ControllerBase
 {
     private readonly IRestaurantService _restaurantService;
-    private readonly ILogger<RestauranController> _logger;
+    private readonly ILogger<RestaurantController> _logger;
 
-    public RestauranController(IRestaurantService restaurantService, ILogger<RestauranController> logger)
+    public RestaurantController(IRestaurantService restaurantService, ILogger<RestaurantController> logger)
     {
         _restaurantService = restaurantService;
         _logger = logger;
     }
 
-    [HttpGet("{id}", Name = "GetRestaurant")]
+    [HttpGet("{id:long}", Name = "GetRestaurant")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<RestaurantResponse>> GetRestaurant(long id)
@@ -37,7 +37,7 @@ public class RestauranController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"Error retrieving restauran with id {id}");
+            _logger.LogError(ex, $"Error retrieving restaurant with id {id}");
             return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while retrieving the restaurant");
         }
     }

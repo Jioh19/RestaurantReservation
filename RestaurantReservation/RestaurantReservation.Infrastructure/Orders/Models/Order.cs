@@ -10,9 +10,9 @@ public class Order
 {
     public long Id { get; set; }
     public long ReservationId { get; set; }
-    public Reservation Reservation { get; set; }
+    public Reservation Reservation { get; set; } = null!;
     public long EmployeeId { get; set; }
-    public Employee Employee { get; set; }
+    public Employee Employee { get; set; } = null!;
     public DateTime OrderDate { get; set; }
     public decimal TotalAmount { get; set; }
     

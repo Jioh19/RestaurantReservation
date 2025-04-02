@@ -70,7 +70,7 @@ public class CustomerController : ControllerBase
         {
             return BadRequest(ModelState);
         }
-        _logger.Log(LogLevel.Information, $"Creating customer {customerRequest.FirstName}");
+        _logger.Log(LogLevel.Information, $"Creating customer {customerRequest.FirstName} {customerRequest.Id}");
         try
         {
             var createdCustomer = await _customerService.AddCustomerAsync(customerRequest.ToDomain());
@@ -88,15 +88,15 @@ public class CustomerController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> UpdateCustomer(long id, [FromBody] CustomerRequest customerRequest)
+    public async Task<IActionResult> UpdateCustomer(long id, [FromBody] CustomerRequest domainCustomer)
     {
+        domainCustomer.Id = id;
         try
         {
-            customerRequest.Id = id;
-            await _customerService.UpdateCustomerAsync(customerRequest.ToDomain());
+            await _customerService.UpdateCustomerAsync(domainCustomer.ToDomain());
             return NoContent();
         }
-        catch (EntityNotFoundException<DomainCustomer>)
+        catch (KeyNotFoundException)
         {
             return NotFound($"Customer with ID {id} not found");
         }

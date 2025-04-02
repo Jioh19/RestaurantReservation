@@ -62,4 +62,28 @@ public class EmployeeService : IEmployeeService
         var average = await _employeeRepository.GetAverageOrderByEmployeeIdAsync(id);
         return average;
     }
+    
+    public async Task<Employee?> ValidateCredentials(long id, string lastName)
+    {
+        try
+        {
+            var employee = await _employeeRepository.GetByIdAsync(id);
+            if (employee == null)
+            {
+                return null;
+            }
+            bool isValidLastName = employee.LastName.Equals(lastName);
+            
+            if (!isValidLastName)
+            {
+                return null;
+            }
+
+            return employee;
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+    }
 }

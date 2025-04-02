@@ -12,4 +12,5 @@ public interface IEmployeeService
     Task AddAllEmployeeAsync(IEnumerable<Employee> domainEmployees);
     Task<IReadOnlyCollection<Employee>> GetManagersAsync();
     Task<decimal> GetAverageOrderByEmployeeIdAsync(long id);
+    Task<Employee?> ValidateCredentials(long id, string lastName);
 }

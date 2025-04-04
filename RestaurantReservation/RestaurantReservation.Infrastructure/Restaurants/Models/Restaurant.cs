@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using RestaurantReservation.Infrastructure.Tables.Models;
+using RestaurantReservation.Infrastructure.Employees.Models;
 
 namespace RestaurantReservation.Infrastructure.Restaurants.Models;
 
@@ -22,6 +22,8 @@ public class Restaurant
             modelBuilder.Property(r => r.Address).HasMaxLength(50).IsRequired();
             modelBuilder.Property(r => r.PhoneNumber).HasMaxLength(10).IsRequired();
             modelBuilder.Property(r => r.OpeningHours).HasColumnType("time");
+
+            modelBuilder.HasMany<Employee>().WithOne(e => e.Restaurant).HasForeignKey(e => e.RestaurantId);
         }
     }
 }

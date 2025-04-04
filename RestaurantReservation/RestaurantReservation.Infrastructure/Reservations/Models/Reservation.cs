@@ -33,6 +33,6 @@ internal class ReservationTypeConfiguration : IEntityTypeConfiguration<Reservati
         modelBuilder.Property(e => e.PartySize).IsRequired();
         modelBuilder.HasOne(e => e.Customer).WithMany().HasForeignKey(e => e.CustomerId);
         modelBuilder.HasOne(e => e.Restaurant).WithMany().HasForeignKey(e => e.RestaurantId);
-        modelBuilder.HasOne(e => e.Table).WithMany().HasForeignKey(e => e.TableId);
+        modelBuilder.HasOne(e => e.Table).WithMany().HasForeignKey(e => e.TableId).OnDelete(DeleteBehavior.NoAction);
     }
 }

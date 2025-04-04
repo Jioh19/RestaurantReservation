@@ -19,11 +19,14 @@ internal class OrderItemReferenceTypeConfiguration : IEntityTypeConfiguration<Or
 {
     public void Configure(EntityTypeBuilder<OrderItemReference> modelBuilder)
     {
-        modelBuilder.ToTable("OrderItemReference", "dbo");
         modelBuilder.HasKey(o => o.Id);
         modelBuilder.Property(o => o.Quantity).IsRequired();
-        modelBuilder.HasOne(o => o.MenuItem).WithMany().HasForeignKey(o => o.MenuItemId);
-        modelBuilder.HasOne(o => o.Order).WithMany().HasForeignKey(o => o.OrderId);
-
+        modelBuilder
+            .HasOne(o => o.MenuItem)
+            .WithMany();
+        modelBuilder
+            .HasOne(o => o.Order)
+            .WithMany()
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

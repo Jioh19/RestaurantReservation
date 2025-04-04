@@ -1,4 +1,9 @@
-﻿using RestaurantReservation.Domain.Customers.Services;
+﻿using FluentValidation;
+using RestaurantReservation.Api.Contracts.Customers.Models;
+using RestaurantReservation.Api.Contracts.Restaurants.Models;
+using RestaurantReservation.Api.Customers.Validators;
+using RestaurantReservation.Api.Restaurants.Validators;
+using RestaurantReservation.Domain.Customers.Services;
 using RestaurantReservation.Domain.Employees.Services;
 using RestaurantReservation.Domain.MenuItems.Service;
 using RestaurantReservation.Domain.Orders.Services;
@@ -38,5 +43,11 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IReservationRepository, ReservationRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();
         services.AddScoped<IMenuItemRepository, MenuItemRepository>();
+    }
+
+    public static void RegisterValidations(this IServiceCollection services)
+    {
+        services.AddScoped<IValidator<CustomerRequest>, CustomerValidator>();
+        services.AddScoped<IValidator<RestaurantRequest>, RestaurantValidator>();
     }
 }

@@ -1,13 +1,9 @@
 using System.Text;
-using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RestaurantReservation.Api;
-using RestaurantReservation.Api.Contracts.Customers.Models;
-using RestaurantReservation.Api.Customers.Validators;
 using RestaurantReservation.Api.Jwt;
-using RestaurantReservation.Domain.Customers.Models;
 using RestaurantReservation.Infrastructure.Contexts;
 
 
@@ -30,13 +26,12 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.RegisterRepositories();
 builder.Services.RegisterServices();
+builder.Services.RegisterValidations();
 
 builder.Services.AddScoped<IJwtGenerator, JwtGenerator>();
 
 builder.Services.Configure<JwtSettings>(
     builder.Configuration.GetSection(nameof(JwtSettings)));
-
-builder.Services.AddScoped<IValidator<CustomerRequest>, CustomerValidator>();
 
 builder.Services.AddAuthentication(options =>
     {

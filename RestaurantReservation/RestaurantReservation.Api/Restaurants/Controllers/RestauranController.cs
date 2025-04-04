@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using RestaurantReservation.Api.Contracts.Restaurants.Models;
 using RestaurantReservation.Api.Restaurants.Mappers;
 using RestaurantReservation.Domain.Errors;
@@ -13,11 +14,13 @@ public class RestaurantController : ControllerBase
 {
     private readonly IRestaurantService _restaurantService;
     private readonly ILogger<RestaurantController> _logger;
+    private readonly IValidator<RestaurantRequest> _restaurantValidator;
 
-    public RestaurantController(IRestaurantService restaurantService, ILogger<RestaurantController> logger)
+    public RestaurantController(IRestaurantService restaurantService, ILogger<RestaurantController> logger, IValidator<RestaurantRequest> restaurantRequestValidator)
     {
         _restaurantService = restaurantService;
         _logger = logger;
+        _restaurantValidator = restaurantRequestValidator;
     }
 
     [HttpGet("{id:long}", Name = "GetRestaurant")]
@@ -65,9 +68,11 @@ public class RestaurantController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<RestaurantResponse>> CreateRestaurant([FromBody] RestaurantRequest restaurantRequest)
     {
-        if (!ModelState.IsValid)
+        var result = await _restaurantValidator.ValidateAsync(restaurantRequest);
+
+        if (!result.IsValid)
         {
-            return BadRequest(ModelState);
+            return BadRequest(result.Errors);
         }
 
         _logger.Log(LogLevel.Information, $"Creating restaurant {restaurantRequest.Name}");
@@ -90,6 +95,14 @@ public class RestaurantController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> UpdateRestaurant(long id, [FromBody] RestaurantRequest restaurantRequest)
     {
+        
+        var result = await _restaurantValidator.ValidateAsync(restaurantRequest);
+
+        if (!result.IsValid)
+        {
+            return BadRequest(result.Errors);
+        }
+        
         try
         {
             restaurantRequest.Id = id;

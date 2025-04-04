@@ -1,9 +1,9 @@
-﻿using System.Collections.Immutable;
-using RestaurantReservation.Domain.Customers.Models;
-using RestaurantReservation.Domain.Repositories;
-using RestaurantReservation.Domain.Customers.Services;
+﻿using RestaurantReservation.Domain.Customers.Models;
 using RestaurantReservation.Domain.Errors;
+using RestaurantReservation.Domain.Repositories;
+using System.Collections.Immutable;
 
+namespace RestaurantReservation.Domain.Customers.Services;
 
 public class CustomerService :  ICustomerService
 {

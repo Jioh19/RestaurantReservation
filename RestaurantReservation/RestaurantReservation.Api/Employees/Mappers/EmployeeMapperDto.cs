@@ -9,6 +9,7 @@ public static partial class EmployeeMapperDto
 {
     public static partial EmployeeResponse ToResponse(this DomainEmployee source);
     
+    [MapperIgnoreSource(nameof(EmployeeRequest.RestaurantId))]
+    [MapperIgnoreTarget(nameof(DomainEmployee.Restaurant))]
     public static partial DomainEmployee ToDomain(this EmployeeRequest source);
-    
 }

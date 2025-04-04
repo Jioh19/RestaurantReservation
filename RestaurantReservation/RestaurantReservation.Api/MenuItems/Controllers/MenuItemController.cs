@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RestaurantReservation.Api.Contracts.MenuItem;
-using RestaurantReservation.Api.MenuItem.Mappers;
+using RestaurantReservation.Api.Contracts.MenuItems;
+using RestaurantReservation.Api.MenuItems.Mappers;
 using RestaurantReservation.Domain.Errors;
 using RestaurantReservation.Domain.MenuItems.Service;
-using RestaurantReservation.Domain.Restaurants.Services;
 using DomainMenuItem = RestaurantReservation.Domain.MenuItems.Models.MenuItem;
 
 namespace RestaurantReservation.Api.MenuItems.Controllers;
@@ -13,18 +12,16 @@ namespace RestaurantReservation.Api.MenuItems.Controllers;
 public class MenuItemController : ControllerBase
 {
     private readonly IMenuItemService _menuItemService;
-    private readonly IRestaurantService _restaurantService;
     private readonly ILogger<MenuItemController> _logger;
 
-    public MenuItemController(IMenuItemService menuItemService, IRestaurantService restaurantService, ILogger<MenuItemController> logger)
+    public MenuItemController(IMenuItemService menuItemService, ILogger<MenuItemController> logger)
     {
         _menuItemService = menuItemService;
-        _restaurantService = restaurantService;
         _logger = logger;
     }
 
     // New GetMenuItem method
-    [HttpGet("{id}", Name = "GetMenuItem")]
+    [HttpGet("{id:long}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<MenuItemResponse>> GetMenuItem(long id)

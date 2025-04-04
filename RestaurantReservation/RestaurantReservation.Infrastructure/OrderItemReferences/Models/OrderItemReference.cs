@@ -10,9 +10,9 @@ public class OrderItemReference
     public long Id { get; set; }
     public int Quantity { get; set; }
     public long MenuItemId { get; set; }
-    public MenuItem MenuItem { get; set; }
+    public MenuItem MenuItem { get; set; } = null!;
     public long OrderId { get; set; }
-    public Order Order { get; set; }
+    public Order Order { get; set; } = null!;
 }
 
 internal class OrderItemReferenceTypeConfiguration : IEntityTypeConfiguration<OrderItemReference>

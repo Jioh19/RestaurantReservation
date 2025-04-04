@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RestaurantReservation.Api.Contracts.EntityReferences;
 using RestaurantReservation.Api.Contracts.Orders.Models;
 using RestaurantReservation.Api.Orders.Mappers;
 using RestaurantReservation.Domain.Errors;
 using RestaurantReservation.Domain.Orders.Services;
-using RestaurantReservation.Domain.Restaurants.Services;
 using DomainOrder = RestaurantReservation.Domain.Orders.Models.Order;
 
 namespace RestaurantReservation.Api.Orders.Controllers;
@@ -13,18 +13,16 @@ namespace RestaurantReservation.Api.Orders.Controllers;
 public class OrderController : ControllerBase
 {
     private readonly IOrderService _orderService;
-    private readonly IRestaurantService _restaurantService;
     private readonly ILogger<OrderController> _logger;
 
-    public OrderController(IOrderService orderService, IRestaurantService restaurantService, ILogger<OrderController> logger)
+    public OrderController(IOrderService orderService, ILogger<OrderController> logger)
     {
         _orderService = orderService;
-        _restaurantService = restaurantService;
         _logger = logger;
     }
 
     // New GetOrder method
-    [HttpGet("{id}", Name = "GetOrder")]
+    [HttpGet("{id:long}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<OrderResponse>> GetOrder(long id)
@@ -155,6 +153,23 @@ public class OrderController : ControllerBase
         {
             _logger.LogError(ex, "Error creating orders");
             return BadRequest("Error creating orders");
+        }
+    }
+    
+    [HttpGet("/{id:long}/items")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<IEnumerable<OrderItemReferenceResponse>>> GetOrderItems(long id)
+    {
+        try
+        {
+            var orderItems = await _orderService.GetOrderItemsByOrderIdAsync(id);
+            return Ok(orderItems.Select(OrderMapperDto.ToResponse).ToList());
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Error retrieving order items for order with ID {id}");
+            return StatusCode(500, "An error occurred while retrieving the order items");
         }
     }
 }

@@ -1,9 +1,8 @@
 ﻿using RestaurantReservation.Domain.Errors;
 using RestaurantReservation.Domain.Repositories;
 using RestaurantReservation.Domain.Tables.Models;
-using RestaurantReservation.Domain.Tables.Services;
 
-namespace TableReservation.Domain.Tables.Services;
+namespace RestaurantReservation.Domain.Tables.Services;
 
 public class TableService : ITableService
 {
@@ -21,7 +20,6 @@ public class TableService : ITableService
         {
             throw new EntityNotFoundException<Table>(id.ToString());
         }
-
         return table;
     }
 

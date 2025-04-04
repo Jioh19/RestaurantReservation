@@ -8,6 +8,7 @@ namespace RestaurantReservation.Infrastructure.Customers.Mappers;
 public static partial class CustomerMapper
 {
     public static partial DomainCustomer ToDomain(this Customer source);
+    
     public static partial Customer ToEntity(this DomainCustomer source);
     
     public static partial void UpdateDomainToInfrastructure(DomainCustomer source, Customer destination);

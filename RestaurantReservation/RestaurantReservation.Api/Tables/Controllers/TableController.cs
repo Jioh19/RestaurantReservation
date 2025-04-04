@@ -2,7 +2,6 @@
 using RestaurantReservation.Api.Contracts.Tables.Models;
 using RestaurantReservation.Api.Tables.Mappers;
 using RestaurantReservation.Domain.Errors;
-using RestaurantReservation.Domain.Restaurants.Services;
 using RestaurantReservation.Domain.Tables.Services;
 using DomainTable = RestaurantReservation.Domain.Tables.Models.Table;
 
@@ -13,18 +12,16 @@ namespace RestaurantReservation.Api.Tables.Controllers;
 public class TableController : ControllerBase
 {
     private readonly ITableService _tableService;
-    private readonly IRestaurantService _restaurantService;
     private readonly ILogger<TableController> _logger;
 
-    public TableController(ITableService tableService, IRestaurantService restaurantService, ILogger<TableController> logger)
+    public TableController(ITableService tableService, ILogger<TableController> logger)
     {
         _tableService = tableService;
-        _restaurantService = restaurantService;
         _logger = logger;
     }
 
     // New GetTable method
-    [HttpGet("{id}", Name = "GetTable")]
+    [HttpGet("{id:long}", Name = "GetTable")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<TableResponse>> GetTable(long id)
@@ -36,8 +33,9 @@ public class TableController : ControllerBase
         }
         catch (EntityNotFoundException<DomainTable>)
         {
-            _logger.LogError($"Table with id {id} not found");
-            return NotFound($"Table with id {id} not found");
+            var message = $"Table with id {id} not found";
+            _logger.LogError(message);
+            return NotFound(message);
         }
         catch (Exception ex)
         {

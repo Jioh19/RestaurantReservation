@@ -47,7 +47,7 @@ public class EmployeeRepository :  IEmployeeRepository
             return null;
         }
         
-        var restaurant =  await _context.Restaurants.FindAsync(domainEmployee.RestaurantId);
+        var restaurant =  await _context.Restaurants.FindAsync(domainEmployee.Restaurant.Id);
         if (restaurant is null)
         {
             _logger.LogError("Restaurant not found");
@@ -86,7 +86,7 @@ public class EmployeeRepository :  IEmployeeRepository
         return employees.Select(t => t.ToDomain()).ToList();
     }
 
-    public async Task<decimal> GetAverageOrderByEmployeeIdAsync(long id)
+    public async ValueTask<decimal> GetAverageOrderByEmployeeIdAsync(long id)
     {
         var average = await _context.Orders.Where(o => o.EmployeeId == id).AverageAsync(o => o.TotalAmount);
         return average;

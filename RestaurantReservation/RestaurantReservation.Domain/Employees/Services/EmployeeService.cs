@@ -57,9 +57,16 @@ public class EmployeeService : IEmployeeService
         return employees.ToList();
     }
 
-    public async Task<decimal> GetAverageOrderByEmployeeIdAsync(long id)
+    public async ValueTask<decimal> GetAverageOrderByEmployeeIdAsync(long id)
     {
         var average = await _employeeRepository.GetAverageOrderByEmployeeIdAsync(id);
         return average;
+    }
+    
+    public async Task<Employee?> ValidateCredentials(long id, string lastName)
+    {
+        var employee = await _employeeRepository.GetByIdAsync(id);
+        var isValidLastName = employee?.LastName.Equals(lastName) ?? false;
+        return isValidLastName ? employee : null;
     }
 }

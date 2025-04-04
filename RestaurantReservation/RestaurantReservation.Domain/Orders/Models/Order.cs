@@ -10,5 +10,5 @@ public class Order
     public DateTime OrderDate { get; set; }
     public decimal TotalAmount { get; set; }
     
-    public IReadOnlyList<OrderItemReference> OrderItems { get; set; } = Array.Empty<OrderItemReference>();
+    public IReadOnlyList<OrderItemReference> Items { get; set; } = Array.Empty<OrderItemReference>();
 }

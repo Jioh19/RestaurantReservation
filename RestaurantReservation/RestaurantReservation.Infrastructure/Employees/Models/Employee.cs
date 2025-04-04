@@ -7,11 +7,11 @@ namespace RestaurantReservation.Infrastructure.Employees.Models;
 public class Employee
 {
     public long Id { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string Position { get; set; }
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+    public string Position { get; set; } = string.Empty;
     public long RestaurantId { get; set; }
-    public Restaurant Restaurant { get; set; }
+    public Restaurant Restaurant { get; set; } = null!;
 }
 
 internal class EmployeeTypeConfiguration : IEntityTypeConfiguration<Employee>

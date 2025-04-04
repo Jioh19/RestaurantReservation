@@ -4,9 +4,9 @@ using RestaurantReservation.Domain.Repositories;
 using RestaurantReservation.Infrastructure.Contexts;
 using RestaurantReservation.Infrastructure.Orders.Mappers;
 using DomainOrder = RestaurantReservation.Domain.Orders.Models.Order;
+using DomainOrderItemReference = RestaurantReservation.Domain.EntityReferences.OrderItemReference;
 
 namespace RestaurantReservation.Infrastructure.Orders.Repositories;
-
 
 public class OrderRepository : IOrderRepository
 {
@@ -70,10 +70,22 @@ public class OrderRepository : IOrderRepository
         await _context.SaveChangesAsync();
     }
     
-    public async Task<IReadOnlyCollection<DomainOrder?>> GetOrdersByReservationIdAsync(long reservationId)
+    public async Task<IReadOnlyCollection<DomainOrder>> GetOrdersByReservationIdAsync(long reservationId)
     {
         var orders = await _context.Orders.Where(t => t.ReservationId == reservationId).ToListAsync();
         _logger.LogInformation($"Getting all Orders by Reservation Id {reservationId}");
         return orders.Select(t => t.ToDomain()).ToList();
     }
+
+    /// <inheritdoc />
+    public async Task<IReadOnlyCollection<DomainOrderItemReference>> GetOrderItemsByOrderIdAsync(long orderId) => 
+        await _context.MenuItems
+        .Join(
+            _context.OrderItemReferences,
+            mi => new { MenuItemId = mi.Id, OrderId = orderId },
+            oir => new { oir.MenuItemId, oir.OrderId },
+            (mi, oir) => oir
+        )
+        .Select(oir => DomainOrderItemReference.Create(oir.Id, oir.MenuItem.Name, oir.Quantity))
+        .ToListAsync();
 }

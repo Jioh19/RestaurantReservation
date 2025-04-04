@@ -1,9 +1,9 @@
-﻿using RestaurantReservation.Domain.Errors;
+﻿using RestaurantReservation.Domain.EntityReferences;
+using RestaurantReservation.Domain.Errors;
 using RestaurantReservation.Domain.Orders.Models;
 using RestaurantReservation.Domain.Repositories;
 
 namespace RestaurantReservation.Domain.Orders.Services;
-
 
 public class OrderService : IOrderService
 {
@@ -52,9 +52,12 @@ public class OrderService : IOrderService
         await _orderRepository.AddAllAsync(domainOrders);
     }
     
-    public async Task<IReadOnlyCollection<Order?>> GetOrdersByReservationIdAsync(long reservationId)
+    public async Task<IReadOnlyCollection<Order>> GetOrdersByReservationIdAsync(long reservationId)
     {
         var orders = await _orderRepository.GetOrdersByReservationIdAsync(reservationId);
         return orders.ToList();
     }
+    
+    public Task<IReadOnlyCollection<OrderItemReference>> GetOrderItemsByOrderIdAsync(long orderId) =>
+        _orderRepository.GetOrderItemsByOrderIdAsync(orderId);
 }

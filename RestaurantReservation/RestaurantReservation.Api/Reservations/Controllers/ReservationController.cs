@@ -6,7 +6,6 @@ using RestaurantReservation.Api.Reservations.Mappers;
 using RestaurantReservation.Domain.Errors;
 using RestaurantReservation.Domain.Orders.Services;
 using RestaurantReservation.Domain.Reservations.Services;
-using RestaurantReservation.Domain.Restaurants.Services;
 using DomainReservation = RestaurantReservation.Domain.Reservations.Models.Reservation;
 
 namespace RestaurantReservation.Api.Reservations.Controllers;
@@ -27,7 +26,7 @@ public class ReservationController : ControllerBase
     }
 
     // New GetReservation method
-    [HttpGet("{id}", Name = "GetReservation")]
+    [HttpGet("{id:long}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ReservationResponse>> GetReservation(long id)
@@ -39,8 +38,9 @@ public class ReservationController : ControllerBase
         }
         catch (EntityNotFoundException<DomainReservation>)
         {
-            _logger.LogError($"Reservation with id {id} not found");
-            return NotFound($"Reservation with id {id} not found");
+            var message = $"Reservation with id {id} not found";
+            _logger.LogError(message);
+            return NotFound(message);
         }
         catch (Exception ex)
         {

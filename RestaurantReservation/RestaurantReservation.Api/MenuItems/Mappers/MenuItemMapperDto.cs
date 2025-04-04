@@ -1,9 +1,9 @@
-﻿using RestaurantReservation.Api.Contracts.MenuItem;
+﻿using RestaurantReservation.Api.Contracts.MenuItems;
 using Riok.Mapperly.Abstractions;
 
 using DomainMenuItem = RestaurantReservation.Domain.MenuItems.Models.MenuItem;
 
-namespace RestaurantReservation.Api.MenuItem.Mappers;
+namespace RestaurantReservation.Api.MenuItems.Mappers;
 
 [Mapper]
 public static partial class MenuItemMapperDto

@@ -51,7 +51,7 @@ public class ReservationService : IReservationService
         await _reservationRepository.AddAllAsync(domainReservations);
     }
 
-    public async Task<IReadOnlyCollection<Reservation?>> GetReservationsByCustomerIdAsync(long customerId)
+    public async Task<IReadOnlyCollection<Reservation>> GetReservationsByCustomerIdAsync(long customerId)
     {
         var reservations = await _reservationRepository.GetReservationsByCustomerIdAsync(customerId);
         return reservations.ToList();

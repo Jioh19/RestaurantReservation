@@ -7,6 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="FluentValidation" Version="11.11.0" />
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.3" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.3"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3">
@@ -20,10 +22,6 @@
       <ProjectReference Include="..\RestaurantReservation.Api.Contracts\RestaurantReservation.Api.Contracts.csproj" />
       <ProjectReference Include="..\RestaurantReservation.Domain\RestaurantReservation.Domain.csproj" />
       <ProjectReference Include="..\RestaurantReservation.Infrastructure\RestaurantReservation.Infrastructure.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Customers\" />
     </ItemGroup>
 
 </Project>

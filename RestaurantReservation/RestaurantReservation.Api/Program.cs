@@ -16,8 +16,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<RestaurantReservationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
         x => x.MigrationsAssembly(typeof(RestaurantReservationDbContext).Assembly)
-        )
-    );
+    )
+);
 builder.Services.AddControllers();
 builder.Services.AddLogging();
 builder.Services.AddEndpointsApiExplorer();
@@ -26,6 +26,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.RegisterRepositories();
 builder.Services.RegisterServices();
+builder.Services.RegisterValidations();
 
 builder.Services.AddScoped<IJwtGenerator, JwtGenerator>();
 
@@ -68,10 +69,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 #pragma warning disable ASP0014
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-});
+app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 #pragma warning restore ASP0014
 
 app.Run();

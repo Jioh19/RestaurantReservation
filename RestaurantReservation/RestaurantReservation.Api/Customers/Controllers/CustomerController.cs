@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using RestaurantReservation.Api.Contracts.Customers.Models;
 using RestaurantReservation.Api.Customers.Mappers;
 using DomainCustomer = RestaurantReservation.Domain.Customers.Models.Customer;
@@ -13,11 +14,13 @@ public class CustomerController : ControllerBase
 {
     private readonly ICustomerService _customerService;
     private readonly ILogger<CustomerController> _logger;
+    private readonly IValidator<CustomerRequest> _customerValidator;
 
-    public CustomerController(ICustomerService customerService, ILogger<CustomerController> logger)
+    public CustomerController(ICustomerService customerService, ILogger<CustomerController> logger, IValidator<CustomerRequest> customerValidator)
     {
         _customerService = customerService;
         _logger = logger;
+        _customerValidator = customerValidator;
     }
     
     // New GetCustomer method
@@ -66,6 +69,13 @@ public class CustomerController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<CustomerResponse>> CreateCustomer([FromBody] CustomerRequest customerRequest)
     {
+        var result = await _customerValidator.ValidateAsync(customerRequest);
+
+        if (!result.IsValid)
+        {
+            return BadRequest(result.Errors);
+        }
+        
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
@@ -91,6 +101,13 @@ public class CustomerController : ControllerBase
     public async Task<IActionResult> UpdateCustomer(long id, [FromBody] CustomerRequest domainCustomer)
     {
         domainCustomer.Id = id;
+        
+        var result = await _customerValidator.ValidateAsync(domainCustomer);
+
+        if (!result.IsValid)
+        {
+            return BadRequest(result.Errors);
+        }
         try
         {
             await _customerService.UpdateCustomerAsync(domainCustomer.ToDomain());

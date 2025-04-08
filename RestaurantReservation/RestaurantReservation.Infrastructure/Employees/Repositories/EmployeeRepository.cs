@@ -3,51 +3,57 @@ using Microsoft.Extensions.Logging;
 using RestaurantReservation.Domain.Repositories;
 using RestaurantReservation.Infrastructure.Contexts;
 using RestaurantReservation.Infrastructure.Employees.Mappers;
+using RestaurantReservation.Infrastructure.Employees.Models;
 using DomainEmployee = RestaurantReservation.Domain.Employees.Models.Employee;
 
 namespace RestaurantReservation.Infrastructure.Employees.Repositories;
 
-public class EmployeeRepository :  IEmployeeRepository
+public class EmployeeRepository : IEmployeeRepository
 {
     private readonly RestaurantReservationDbContext _context;
     private readonly ILogger<EmployeeRepository> _logger;
+
+    private IQueryable<Employee> FullQuery => _context.Employees.Include(e => e.Restaurant);
 
     public EmployeeRepository(RestaurantReservationDbContext context, ILogger<EmployeeRepository> logger)
     {
         _context = context;
         _logger = logger;
     }
-    
+
     public async Task<IReadOnlyCollection<DomainEmployee>> GetAllAsync()
     {
-        var employees = await _context.Employees.ToListAsync();
+        var employees = await FullQuery.ToListAsync();
         _logger.LogInformation("Getting all Employees" + " " + employees.Count);
         return employees.Select(t => t.ToDomain()).ToList();
     }
 
     public async Task<DomainEmployee?> GetByIdAsync(long id)
     {
-        var employee = await _context.Employees.FindAsync(id);
+        var employee = await FullQuery.FirstOrDefaultAsync(e => e.Id == id);
         return employee?.ToDomain();
     }
 
     public async Task<DomainEmployee> AddAsync(DomainEmployee domainEmployee)
     {
-        var response = await _context.Employees.AddAsync(domainEmployee.ToEntity());
+        var entity = domainEmployee.ToEntity();
+        await _context.Employees.AddAsync(entity);
         await _context.SaveChangesAsync();
-        return response.Entity.ToDomain();
+        return (await FullQuery
+                .FirstAsync(e => e.Id == entity.Id))
+            .ToDomain();
     }
 
     public async Task<DomainEmployee?> UpdateAsync(DomainEmployee domainEmployee)
     {
-        var employee = await _context.Employees.FindAsync(domainEmployee.Id);
+        var employee = await FullQuery.FirstOrDefaultAsync(e => e.Id == domainEmployee.Id);
         if (employee is null)
         {
             _logger.LogError("Employee not found");
             return null;
         }
-        
-        var restaurant =  await _context.Restaurants.FindAsync(domainEmployee.Restaurant.Id);
+
+        var restaurant = await _context.Restaurants.FindAsync(domainEmployee.Restaurant.Id);
         if (restaurant is null)
         {
             _logger.LogError("Restaurant not found");
@@ -69,16 +75,17 @@ public class EmployeeRepository :  IEmployeeRepository
         {
             return;
         }
+
         _context.Employees.Remove(employee);
         await _context.SaveChangesAsync();
     }
-    
+
     public async Task AddAllAsync(IEnumerable<DomainEmployee> domainEmployees)
     {
         await _context.Employees.AddRangeAsync(domainEmployees.Select(t => t.ToEntity()).ToList());
         await _context.SaveChangesAsync();
     }
-    
+
     public async Task<IReadOnlyCollection<DomainEmployee>> GetManagersAsync()
     {
         var employees = await _context.Employees.Where(t => t.Position.Equals("Manager")).ToListAsync();

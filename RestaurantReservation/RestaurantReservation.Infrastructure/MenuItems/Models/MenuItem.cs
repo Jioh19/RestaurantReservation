@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using RestaurantReservation.Infrastructure.OrderItemReferences.Models;
+using RestaurantReservation.Infrastructure.Orders.Models;
 using RestaurantReservation.Infrastructure.Restaurants.Models;
 
 namespace RestaurantReservation.Infrastructure.MenuItems.Models;
@@ -22,6 +24,7 @@ internal class MenuItemTypeConfiguration : IEntityTypeConfiguration<MenuItem>
         modelBuilder.ToTable("MenuItems", "dbo");
         modelBuilder.HasKey(m => m.Id);
         modelBuilder.HasOne(m => m.Restaurant).WithMany().HasForeignKey(m => m.RestaurantId);
+        modelBuilder.HasMany<Order>().WithMany().UsingEntity<OrderItemReference>();
         modelBuilder.Property(m => m.Name).HasMaxLength(50).IsRequired();
         modelBuilder.Property(m => m.Description).HasMaxLength(200).IsRequired();
         modelBuilder.Property(m => m.Price).HasColumnType("decimal(18,2)");

@@ -33,6 +33,7 @@ public class OrderService : IOrderService
 
     public async Task<Order> AddOrderAsync(Order domainOrder)
     {
+        Console.WriteLine($"Creando order en service {domainOrder.Employee.Id}");
         var order = await _orderRepository.AddAsync(domainOrder);
         return order;
     }

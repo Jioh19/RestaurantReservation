@@ -21,7 +21,7 @@ public class MenuItemController : ControllerBase
     }
 
     // New GetMenuItem method
-    [HttpGet("{id:long}")]
+    [HttpGet("{id:long}", Name = "GetMenuItem")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<MenuItemResponse>> GetMenuItem(long id)

@@ -8,7 +8,7 @@ using DomainEmployee = RestaurantReservation.Domain.Employees.Models.Employee;
 
 namespace RestaurantReservation.Infrastructure.Employees.Repositories;
 
-public class EmployeeRepository :  IEmployeeRepository
+public class EmployeeRepository : IEmployeeRepository
 {
     private readonly RestaurantReservationDbContext _context;
     private readonly ILogger<EmployeeRepository> _logger;
@@ -20,7 +20,7 @@ public class EmployeeRepository :  IEmployeeRepository
         _context = context;
         _logger = logger;
     }
-    
+
     public async Task<IReadOnlyCollection<DomainEmployee>> GetAllAsync()
     {
         var employees = await FullQuery.ToListAsync();
@@ -40,7 +40,7 @@ public class EmployeeRepository :  IEmployeeRepository
         await _context.Employees.AddAsync(entity);
         await _context.SaveChangesAsync();
         return (await FullQuery
-            .FirstAsync(e => e.Id == entity.Id))
+                .FirstAsync(e => e.Id == entity.Id))
             .ToDomain();
     }
 
@@ -52,8 +52,8 @@ public class EmployeeRepository :  IEmployeeRepository
             _logger.LogError("Employee not found");
             return null;
         }
-        
-        var restaurant =  await _context.Restaurants.FindAsync(domainEmployee.Restaurant.Id);
+
+        var restaurant = await _context.Restaurants.FindAsync(domainEmployee.Restaurant.Id);
         if (restaurant is null)
         {
             _logger.LogError("Restaurant not found");
@@ -75,16 +75,17 @@ public class EmployeeRepository :  IEmployeeRepository
         {
             return;
         }
+
         _context.Employees.Remove(employee);
         await _context.SaveChangesAsync();
     }
-    
+
     public async Task AddAllAsync(IEnumerable<DomainEmployee> domainEmployees)
     {
         await _context.Employees.AddRangeAsync(domainEmployees.Select(t => t.ToEntity()).ToList());
         await _context.SaveChangesAsync();
     }
-    
+
     public async Task<IReadOnlyCollection<DomainEmployee>> GetManagersAsync()
     {
         var employees = await _context.Employees.Where(t => t.Position.Equals("Manager")).ToListAsync();

@@ -1,9 +1,11 @@
-﻿namespace RestaurantReservation.Api.Contracts.Orders.Models;
+﻿using RestaurantReservation.Api.Contracts.EntityReferences;
+
+namespace RestaurantReservation.Api.Contracts.Orders.Models;
 
 public record OrderRequest(
     long Id, 
-    long ReservationId,
-    long EmployeeId,
     DateTime OrderDate,
-    decimal TotalAmount
+    decimal TotalAmount,
+    EntityReference<long> Reservation,
+    EntityReference<long> Employee
 );

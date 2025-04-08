@@ -1,10 +1,12 @@
-﻿namespace RestaurantReservation.Api.Contracts.Reservations;
+﻿using RestaurantReservation.Api.Contracts.EntityReferences;
+
+namespace RestaurantReservation.Api.Contracts.Reservations;
 
 public record ReservationRequest(
     long Id, 
-    long CustomerId, 
-    long RestaurantId,
-    long TableId,
+    EntityReference<long> Restaurant,
+    EntityReference<long> Customer,
+    EntityReference<long> Table,
     DateTime ReservationDate,
     int PartySize
     );

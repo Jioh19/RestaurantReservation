@@ -7,7 +7,6 @@ using DomainEmployee = RestaurantReservation.Domain.Employees.Models.Employee;
 
 namespace RestaurantReservation.Api.Employees.Controllers;
 
-
 [ApiController]
 [Route("api/employee")]
 public class EmployeeController : ControllerBase

@@ -1,5 +1,6 @@
 using FluentAssertions;
 using FluentAssertions.Execution;
+using RestaurantReservation.Domain.EntityReferences;
 using RestaurantReservation.Domain.MenuItems.Models;
 using RestaurantReservation.Domain.Restaurants.Models;
 
@@ -11,7 +12,7 @@ public class MenuItemTests
     public void MenuItem_WithValidData_ShouldBeValid()
     {
         // Arrange
-        var restaurant = new Restaurant
+        var restaurant = new EntityReference<long>()
         {
             Id = 1,
             Name = "Test Restaurant"
@@ -20,7 +21,7 @@ public class MenuItemTests
         var menuItem = new MenuItem
         {
             Id = 1,
-            RestaurantId = restaurant.Id,
+            Restaurant = restaurant,
             Name = "Margherita Pizza",
             Description = "Classic Italian pizza with tomato and mozzarella",
             Price = 12.99m
@@ -30,7 +31,7 @@ public class MenuItemTests
         using (new AssertionScope())
         {
             menuItem.Id.Should().Be(1);
-            menuItem.RestaurantId.Should().Be(restaurant.Id);
+            menuItem.Restaurant.Should().Be(restaurant);
             menuItem.Name.Should().Be("Margherita Pizza");
             menuItem.Description.Should().Be("Classic Italian pizza with tomato and mozzarella");
             menuItem.Price.Should().Be(12.99m);

@@ -22,7 +22,7 @@ public class OrderController : ControllerBase
     }
 
     // New GetOrder method
-    [HttpGet("{id:long}")]
+    [HttpGet("{id:long}", Name = "GetOrder")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<OrderResponse>> GetOrder(long id)

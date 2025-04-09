@@ -8,6 +8,9 @@ using RestaurantReservation.Domain.Errors;
 
 namespace RestaurantReservation.Api.Customers.Controllers;
 
+/// <summary>
+/// Customer Controller
+/// </summary>
 [ApiController]
 [Route("api/customer")]
 public class CustomerController : ControllerBase
@@ -23,6 +26,11 @@ public class CustomerController : ControllerBase
         _customerValidator = customerValidator;
     }
     
+    /// <summary>
+    /// Gets Customer by Id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>Customer</returns>
     // New GetCustomer method
     [HttpGet("{id}", Name = "GetCustomer")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -46,6 +54,10 @@ public class CustomerController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Gets all Customers
+    /// </summary>
+    /// <returns>List of Customers</returns>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -63,6 +75,11 @@ public class CustomerController : ControllerBase
         }
     }
     
+    /// <summary>
+    /// Creates a Customer
+    /// </summary>
+    /// <param name="customerRequest"></param>
+    /// <returns>Created Customer</returns>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -93,6 +110,12 @@ public class CustomerController : ControllerBase
         }
     }
     
+    /// <summary>
+    /// Updates a Customer by Id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="domainCustomer"></param>
+    /// <returns>Updated Customer</returns>
     [HttpPut("{id:long}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -124,6 +147,11 @@ public class CustomerController : ControllerBase
         }
     }
     
+    /// <summary>
+    /// Deletes a Customer
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("{id:long}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

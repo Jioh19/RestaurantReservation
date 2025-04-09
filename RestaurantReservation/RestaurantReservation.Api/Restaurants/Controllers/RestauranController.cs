@@ -8,6 +8,9 @@ using DomainRestaurant = RestaurantReservation.Domain.Restaurants.Models.Restaur
 
 namespace RestaurantReservation.Api.Restaurants.Controllers;
 
+/// <summary>
+/// Restaurant Controller
+/// </summary>
 [ApiController]
 [Route("api/restaurant")]
 public class RestaurantController : ControllerBase
@@ -23,6 +26,11 @@ public class RestaurantController : ControllerBase
         _restaurantValidator = restaurantRequestValidator;
     }
 
+    /// <summary>
+    ///  Gets Restaurant by Id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>Restaurant</returns>
     [HttpGet("{id:long}", Name = "GetRestaurant")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -45,6 +53,10 @@ public class RestaurantController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Gets all Restaurants
+    /// </summary>
+    /// <returns>List of Restaurant</returns>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -62,6 +74,11 @@ public class RestaurantController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Creates a Restaurant
+    /// </summary>
+    /// <param name="restaurantRequest"></param>
+    /// <returns>Created Restaurant</returns>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -88,6 +105,12 @@ public class RestaurantController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Updates a Restaurant
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="restaurantRequest"></param>
+    /// <returns>Updated Restaurant</returns>
     [HttpPut("{id:long}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -120,6 +143,11 @@ public class RestaurantController : ControllerBase
         }
     }
     
+    /// <summary>
+    /// Deletes a Restaurant
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("{id:long}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

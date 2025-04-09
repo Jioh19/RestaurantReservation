@@ -25,7 +25,9 @@ public class TableService : ITableService
 
     public async Task<IReadOnlyCollection<Table>> GetAllTablesAsync()
     {
+        Console.WriteLine("Entre al servicio de table");
         var tables = await _tableRepository.GetAllAsync();
+        Console.WriteLine("Recibi las tablas");
         return tables.ToList();
     }
 

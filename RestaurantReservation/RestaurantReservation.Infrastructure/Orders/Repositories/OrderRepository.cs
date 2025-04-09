@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using RestaurantReservation.Domain.EntityReferences;
 using RestaurantReservation.Domain.Repositories;
 using RestaurantReservation.Infrastructure.Contexts;
 using RestaurantReservation.Infrastructure.Orders.Mappers;
+using RestaurantReservation.Infrastructure.Orders.Models;
 using DomainOrder = RestaurantReservation.Domain.Orders.Models.Order;
 using DomainOrderItemReference = RestaurantReservation.Domain.EntityReferences.OrderItemReference;
 
@@ -12,6 +14,10 @@ public class OrderRepository : IOrderRepository
 {
     private readonly RestaurantReservationDbContext _context;
     private readonly ILogger<OrderRepository> _logger;
+    
+    private IQueryable<Order> FullQuery => _context.Orders
+        .Include(r => r.Employee)
+        .Include( r => r.Reservation);
 
     public OrderRepository(RestaurantReservationDbContext context, ILogger<OrderRepository> logger)
     {
@@ -21,22 +27,26 @@ public class OrderRepository : IOrderRepository
     
     public async Task<IReadOnlyCollection<DomainOrder>> GetAllAsync()
     {
-        var order = await _context.Orders.ToListAsync();
+        var order = await FullQuery.ToListAsync();
         _logger.LogInformation("Getting all Orders" + " " + order.Count);
         return order.Select(t => t.ToDomain()).ToList();
     }
 
     public async Task<DomainOrder?> GetByIdAsync(long id)
     {
-        var table = await _context.Orders.FindAsync(id);
+        var table = await FullQuery.FirstOrDefaultAsync(r => r.Id == id);
         return table?.ToDomain();
     }
 
     public async Task<DomainOrder> AddAsync(DomainOrder domainOrder)
     {
-        var response = await _context.Orders.AddAsync(domainOrder.ToEntity());
+        var entity = domainOrder.ToEntity();
+        _logger.LogInformation($"Adding Order {entity.TotalAmount} {entity.ReservationId} {entity.EmployeeId}");
+        await _context.Orders.AddAsync(entity);
         await _context.SaveChangesAsync();
-        return response.Entity.ToDomain();
+        return (await FullQuery
+                .FirstAsync(o => o.Id == entity.Id))
+            .ToDomain();
     }
 
     public async Task<DomainOrder?> UpdateAsync(DomainOrder domainOrder)

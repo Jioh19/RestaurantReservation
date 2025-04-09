@@ -26,7 +26,7 @@ public class ReservationController : ControllerBase
     }
 
     // New GetReservation method
-    [HttpGet("{id:long}")]
+    [HttpGet("{id:long}", Name = "GetReservation")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ReservationResponse>> GetReservation(long id)

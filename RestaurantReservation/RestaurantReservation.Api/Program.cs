@@ -2,6 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using RestaurantReservation.Api;
 using RestaurantReservation.Api.Jwt;
 using RestaurantReservation.Infrastructure.Contexts;
@@ -22,6 +23,20 @@ builder.Services.AddControllers();
 builder.Services.AddLogging();
 builder.Services.AddEndpointsApiExplorer();
 
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "RestaurantReservation API",
+        Version = "v1",
+        Description = "Restaurant Reservation API FootHill",
+        Contact = new OpenApiContact
+        {
+            Name = "Juan oh",
+            Email = "jioh@example.com"
+        }
+    });
+});
 // Register repositories and services
 
 builder.Services.RegisterRepositories();
@@ -61,6 +76,12 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+        options.RoutePrefix = string.Empty; // To serve the Swagger UI at the app's root
+    });
 }
 
 app.UseHttpsRedirection();

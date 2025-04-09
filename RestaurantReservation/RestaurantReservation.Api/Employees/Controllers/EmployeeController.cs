@@ -7,7 +7,9 @@ using DomainEmployee = RestaurantReservation.Domain.Employees.Models.Employee;
 
 namespace RestaurantReservation.Api.Employees.Controllers;
 
-
+/// <summary>
+/// Employee Controller
+/// </summary>
 [ApiController]
 [Route("api/employee")]
 public class EmployeeController : ControllerBase
@@ -21,6 +23,11 @@ public class EmployeeController : ControllerBase
         _logger = logger;
     }
 
+    /// <summary>
+    /// Gets Employee by Id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>Employee</returns>
     // New GetEmployee method
     [HttpGet("{id}", Name = "GetEmployee")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -44,6 +51,10 @@ public class EmployeeController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Gets all Employees
+    /// </summary>
+    /// <returns>List of Employees</returns>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -61,6 +72,11 @@ public class EmployeeController : ControllerBase
         }
     }
     
+    /// <summary>
+    /// Creates a Employee
+    /// </summary>
+    /// <param name="employeeRequest"></param>
+    /// <returns>Created Employee</returns>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -85,6 +101,12 @@ public class EmployeeController : ControllerBase
         }
     }
     
+    /// <summary>
+    /// Updated a Employee by Id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="employeeRequest"></param>
+    /// <returns>Updated Employee</returns>
     [HttpPut("{id:long}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -111,6 +133,11 @@ public class EmployeeController : ControllerBase
         }
     }
     
+    /// <summary>
+    /// Deletes a Employee
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("{id:long}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -156,6 +183,10 @@ public class EmployeeController : ControllerBase
         }
     }
     
+    /// <summary>
+    /// Gets all Employees that area Managers
+    /// </summary>
+    /// <returns>List of Employees</returns>
     [HttpGet("managers")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -173,10 +204,15 @@ public class EmployeeController : ControllerBase
         }
     }
     
+    /// <summary>
+    /// Gets the average order amount by Employee Id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id}/average-order-amount")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<IEnumerable<EmployeeResponse>>> GetAverageOrderByEmployeeId(long id)
+    public async Task<ActionResult<decimal>> GetAverageOrderByEmployeeId(long id)
     {
         try
         {
